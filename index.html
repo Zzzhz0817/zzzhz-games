@@ -1,1001 +1,239 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>张涵哲 — 游戏设计师</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@200;300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #111113;
-    --surface: #1a1a1e;
-    --surface2: #222228;
-    --text: #ececf0;
-    --text-dim: #7a7a86;
-    --text-faint: #44444e;
-    --accent: #e8483e;
-    --accent-soft: rgba(232,72,62,0.12);
-    --blue: #4a9eff;
-    --green: #34d399;
-    --yellow: #fbbf24;
-    --radius: 16px;
-    --radius-sm: 10px;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { font-size: 16px; scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Noto Sans SC', 'Space Grotesk', sans-serif;
-    line-height: 1.6;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    max-width: 430px;
-    margin: 0 auto;
-    min-height: 100vh;
-    position: relative;
-  }
-
-  /* Hide all lang content by default, show based on class on <html> */
-  [data-lang-zh] { display: none !important; }
-  [data-lang-en] { display: none !important; }
-  
-  /* Block-level elements */
-  html.lang-zh .bl[data-lang-zh] { display: block !important; }
-  html.lang-en .bl[data-lang-en] { display: block !important; }
-  
-  /* Inline elements */
-  html.lang-zh .il[data-lang-zh] { display: inline !important; }
-  html.lang-en .il[data-lang-en] { display: inline !important; }
-  
-  /* Flex containers */
-  html.lang-zh .fl[data-lang-zh] { display: flex !important; }
-  html.lang-en .fl[data-lang-en] { display: flex !important; }
-  
-  /* Inline-block (for tags, badges) */
-  html.lang-zh .ib[data-lang-zh] { display: inline-block !important; }
-  html.lang-en .ib[data-lang-en] { display: inline-block !important; }
-
-  /* ====== HERO ====== */
-  .hero {
-    padding: 20px 20px 16px;
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .hero-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-  }
-
-  .identity { flex: 1; }
-
-  .name-cn {
-    font-size: 1.7rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    line-height: 1.2;
-    margin-bottom: 2px;
-  }
-
-  .name-en {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.78rem;
-    color: var(--text-dim);
-    font-weight: 400;
-    letter-spacing: 1px;
-  }
-
-  .avatar {
-    width: 56px;
-    height: 56px;
-    border-radius: 14px;
-    background: var(--surface2);
-    overflow: hidden;
-    flex-shrink: 0;
-    border: 2px solid var(--surface2);
-  }
-
-  .avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .avatar-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    background: linear-gradient(135deg, var(--surface), var(--surface2));
-  }
-
-  /* Tags */
-  .tags {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-  }
-
-  .tag {
-    font-size: 0.68rem;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-  }
-
-  .tag-primary {
-    background: var(--accent-soft);
-    color: var(--accent);
-  }
-
-  .tag-outline {
-    background: transparent;
-    border: 1px solid var(--text-faint);
-    color: var(--text-dim);
-  }
-
-  /* Slogan */
-  .slogan {
-    font-size: 0.98rem;
-    font-weight: 300;
-    color: var(--text-dim);
-    margin-bottom: 20px;
-    line-height: 1.8;
-  }
-
-  .slogan strong {
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  /* Featured Grid */
-  .featured-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 10px;
-    flex: 1;
-    min-height: 0;
-  }
-
-  .featured-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.15s;
-    cursor: pointer;
-  }
-
-  .featured-card:active { transform: scale(0.97); }
-  .featured-card.wide { grid-column: 1 / -1; }
-
-  .card-visual {
-    flex: 1;
-    min-height: 90px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .visual-translator { background: linear-gradient(135deg, #1a1a3e, #2d1b4e); }
-  .visual-maggie { background: linear-gradient(135deg, #1a3a2a, #0a2a1a); }
-  .visual-widget { background: linear-gradient(135deg, #2a2a1a, #3a2a0a); }
-
-  .card-visual .emoji-icon {
-    font-size: 2.5rem;
-    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
-  }
-
-  .card-info { padding: 10px 12px; }
-
-  .card-badge {
-    display: inline-block;
-    font-size: 0.58rem;
-    font-weight: 600;
-    padding: 2px 6px;
-    border-radius: 4px;
-    margin-bottom: 3px;
-    letter-spacing: 0.5px;
-  }
-
-  .badge-award { background: rgba(251,191,36,0.15); color: var(--yellow); }
-  .badge-shipped { background: rgba(52,211,153,0.15); color: var(--green); }
-  .badge-wip { background: rgba(74,158,255,0.15); color: var(--blue); }
-
-  .card-title {
-    font-size: 0.82rem;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 2px;
-  }
-
-  .card-sub {
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    font-weight: 400;
-  }
-
-  /* Scroll hint */
-  .scroll-hint {
-    text-align: center;
-    padding: 12px 0 4px;
-    color: var(--text-faint);
-    font-size: 0.68rem;
-    letter-spacing: 2px;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.7; }
-  }
-
-  /* ====== SECTIONS ====== */
-  .section { padding: 28px 20px; }
-
-  .section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--text-faint);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--text-faint);
-    opacity: 0.25;
-  }
-
-  .divider {
-    height: 1px;
-    background: var(--text-faint);
-    opacity: 0.12;
-    margin: 0 20px;
-  }
-
-  /* Project detail */
-  .project-detail {
-    background: var(--surface);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin-bottom: 14px;
-  }
-
-  .project-detail-visual {
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .project-detail-visual .emoji-icon {
-    font-size: 3.2rem;
-    filter: drop-shadow(0 4px 20px rgba(0,0,0,0.4));
-  }
-
-  .project-detail-body { padding: 14px 16px; }
-
-  .project-role {
-    font-size: 0.68rem;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 4px;
-    letter-spacing: 0.5px;
-  }
-
-  .project-detail-title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  .project-detail-desc {
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    font-weight: 300;
-    line-height: 1.75;
-    margin-bottom: 12px;
-  }
-
-  .project-detail-tags {
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-  }
-
-  .detail-tag {
-    font-size: 0.6rem;
-    padding: 3px 8px;
-    border-radius: 6px;
-    background: var(--surface2);
-    color: var(--text-dim);
-    font-weight: 500;
-  }
-
-  /* Highlights */
-  .highlights-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-
-  .highlight-card {
-    background: var(--surface);
-    border-radius: var(--radius-sm);
-    padding: 16px;
-    text-align: center;
-  }
-
-  .highlight-value {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .highlight-value.accent { color: var(--accent); }
-  .highlight-value.green { color: var(--green); }
-  .highlight-value.yellow { color: var(--yellow); }
-  .highlight-value.blue { color: var(--blue); }
-
-  .highlight-label {
-    font-size: 0.66rem;
-    color: var(--text-dim);
-  }
-
-  /* Mini grid */
-  .mini-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .mini-card {
-    background: var(--surface);
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.15s;
-  }
-
-  .mini-card:active { transform: scale(0.97); }
-
-  .mini-visual {
-    height: 72px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-  }
-
-  .mini-1 .mini-visual { background: linear-gradient(135deg, #2a1a2a, #1a0a2a); }
-  .mini-2 .mini-visual { background: linear-gradient(135deg, #1a2a2a, #0a2a3a); }
-  .mini-3 .mini-visual { background: linear-gradient(135deg, #2a2a2a, #1a1a2a); }
-  .mini-4 .mini-visual { background: linear-gradient(135deg, #3a2a1a, #2a1a0a); }
-
-  .mini-info { padding: 8px 10px; }
-  .mini-title { font-size: 0.72rem; font-weight: 600; }
-  .mini-sub { font-size: 0.58rem; color: var(--text-dim); }
-
-  /* Bio */
-  .bio-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 18px;
-    margin-bottom: 12px;
-  }
-
-  .bio-text {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    font-weight: 300;
-    line-height: 1.8;
-    margin-bottom: 12px;
-  }
-
-  .bio-text:last-child { margin-bottom: 0; }
-
-  /* Timeline */
-  .timeline {
-    position: relative;
-    padding-left: 20px;
-  }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 4px;
-    top: 6px;
-    bottom: 6px;
-    width: 1px;
-    background: var(--text-faint);
-    opacity: 0.3;
-  }
-
-  .timeline-item {
-    position: relative;
-    padding-bottom: 16px;
-    padding-left: 4px;
-  }
-
-  .timeline-item:last-child { padding-bottom: 0; }
-
-  .timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -20px;
-    top: 7px;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--surface2);
-    border: 2px solid var(--text-faint);
-  }
-
-  .timeline-item:first-child::before {
-    background: var(--accent);
-    border-color: var(--accent);
-  }
-
-  .timeline-year {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--text-faint);
-    letter-spacing: 1px;
-    margin-bottom: 1px;
-  }
-
-  .timeline-title {
-    font-size: 0.82rem;
-    font-weight: 600;
-    margin-bottom: 1px;
-  }
-
-  .timeline-sub {
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    font-weight: 300;
-  }
-
-  /* Skills */
-  .skills-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .skill-chip {
-    font-size: 0.68rem;
-    padding: 5px 11px;
-    border-radius: 20px;
-    background: var(--surface);
-    color: var(--text-dim);
-    font-weight: 400;
-    border: 1px solid transparent;
-  }
-
-  .skill-chip.hl {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: var(--accent-soft);
-  }
-
-  /* Contact */
-  .contact-section { padding: 28px 20px 40px; }
-
-  .contact-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 22px 18px;
-    text-align: center;
-  }
-
-  .contact-title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-
-  .contact-sub {
-    font-size: 0.76rem;
-    color: var(--text-dim);
-    font-weight: 300;
-    margin-bottom: 18px;
-  }
-
-  .contact-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .contact-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 13px;
-    border-radius: var(--radius-sm);
-    font-size: 0.8rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: transform 0.15s;
-  }
-
-  .contact-btn:active { transform: scale(0.97); }
-  .contact-btn.primary { background: var(--accent); color: #fff; }
-  .contact-btn.secondary { background: var(--surface2); color: var(--text); }
-  .contact-btn .btn-icon { font-size: 0.95rem; }
-
-  /* Footer */
-  .footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 0.62rem;
-    color: var(--text-faint);
-    font-family: 'Space Mono', monospace;
-    letter-spacing: 1px;
-  }
-
-  /* Lang FAB */
-  .lang-fab {
-    position: fixed;
-    bottom: 20px;
-    right: max(20px, calc((100vw - 430px) / 2 + 20px));
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: var(--surface2);
-    border: 1px solid var(--text-faint);
-    color: var(--text-dim);
-    font-size: 0.62rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-family: 'Space Grotesk', sans-serif;
-    z-index: 100;
-    transition: all 0.2s;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    letter-spacing: 0.5px;
-  }
-
-  .lang-fab:active {
-    transform: scale(0.9);
-  }
-
-  /* Desktop frame */
-  @media (min-width: 431px) {
-    body {
-      border-left: 1px solid #2a2a2e;
-      border-right: 1px solid #2a2a2e;
-      box-shadow: 0 0 80px rgba(0,0,0,0.5);
-    }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hanzhe Zhang | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <header class="top-nav">
+        <button id="lang-toggle" data-i18n="navToggle">中</button>
+    </header>
 
-<!-- ============ FIRST SCREEN ============ -->
-<div class="hero">
-  <div class="hero-top">
-    <div class="identity">
-      <div class="name-cn">张涵哲</div>
-      <div class="name-en">Hanzhe Zhang</div>
-    </div>
-    <div class="avatar">
-      <div class="avatar-placeholder">👤</div>
-      <!-- 之后换成: <img src="assets/avatar.jpg" alt="张涵哲"> -->
-    </div>
-  </div>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 data-i18n="heroName">Hanzhe Zhang</h1>
+            <p class="title" data-i18n="heroTitle">Game Designer | MFA in Game Science & Design ’26</p>
+            <div class="tags">
+                <span class="tag" data-i18n="tag1">Technical Design</span>
+                <span class="tag" data-i18n="tag2">AI + Games</span>
+                <span class="tag" data-i18n="tag3">Systems Design</span>
+                <span class="tag" data-i18n="tag4">Quest & Narrative</span>
+            </div>
+        </section>
 
-  <!-- Chinese tags -->
-  <div class="tags fl" data-lang-zh>
-    <span class="tag tag-primary">游戏设计硕士 '26</span>
-    <span class="tag tag-outline">任务设计</span>
-    <span class="tag tag-outline">系统设计</span>
-    <span class="tag tag-outline">技术策划</span>
-  </div>
+        <!-- Projects Overview -->
+        <section class="projects-overview">
+            <a href="#magiscape" class="project-card">
+                <h3 data-i18n="proj1Title">MagiScape</h3>
+                <p data-i18n="proj1Desc">AI Survival Builder · GenAI Systems Design</p>
+            </a>
+            <a href="#widget-idle" class="project-card">
+                <h3 data-i18n="proj2Title">Widget Idle</h3>
+                <p data-i18n="proj2Desc">Desktop Idle Game · Systems Design & Full-Stack Dev</p>
+            </a>
+            <a href="#translator" class="project-card">
+                <h3 data-i18n="proj3Title">Right Click to Open Translator</h3>
+                <p data-i18n="proj3Desc">Best Puzzle Game, CUSGA 2024 · Puzzle & Narrative Design</p>
+            </a>
+        </section>
 
-  <!-- English tags -->
-  <div class="tags fl" data-lang-en>
-    <span class="tag tag-primary">Game Designer</span>
-    <span class="tag tag-outline">Quest Design</span>
-    <span class="tag tag-outline">Technical Background</span>
-    <span class="tag tag-outline">MFA Game Design '26</span>
-  </div>
+        <hr class="divider">
 
-  <!-- Chinese slogan -->
-  <div class="slogan bl" data-lang-zh>
-    兼具<strong>开发能力</strong>的游戏策划。<br>
-    擅长<strong>任务设计</strong>与<strong>系统设计</strong>，<br>
-    关注玩家体验，用技术落地设计想法。
-  </div>
+        <!-- Project: MagiScape -->
+        <section id="magiscape" class="project-detail">
+            <div class="project-header">
+                <h2 data-i18n="detail1Title">MagiScape</h2>
+                <p class="subtitle" data-i18n="detail1Subtitle">LLM-Driven Survival Builder | GenAI Systems Design (Internship)</p>
+            </div>
+            
+            <div class="media-container">
+                <div class="media-scroller">
+                    <div class="media-item">
+                        <video class="project-video" muted playsinline loop poster="assets/magiscape_poster.jpg">
+                            <source src="assets/magiscape.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-pause-overlay"></div>
+                    </div>
+                    <div class="media-item">
+                        <img src="assets/magiscape_1.jpg" alt="MagiScape Screenshot 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="placeholder-text" style="display:none;">Screenshot 1</div>
+                    </div>
+                    <div class="media-item">
+                        <img src="assets/magiscape_2.jpg" alt="MagiScape Screenshot 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="placeholder-text" style="display:none;">Screenshot 2</div>
+                    </div>
+                </div>
+                <!-- Swipe Hint -->
+                <div class="swipe-hint">
+                    <div class="arrow-animation">⟷</div>
+                </div>
+            </div>
 
-  <!-- English slogan -->
-  <div class="slogan bl" data-lang-en>
-    Game designer with a <strong>technical edge</strong>.<br>
-    Focused on <strong>systems</strong>, <strong>quest design</strong>,<br>
-    and crafting meaningful player experiences.
-  </div>
+            <div class="project-description">
+                <p data-i18n="detail1Intro">A top-down survival builder...</p>
+            </div>
 
-  <!-- Featured projects (shared) -->
-  <div class="featured-grid">
-    <div class="featured-card" onclick="scrollToProject('p1')">
-      <div class="card-visual visual-translator">
-        <span class="emoji-icon">🔤</span>
-      </div>
-      <div class="card-info">
-        <span class="card-badge badge-award">🏆 最佳解谜</span>
-        <div class="card-title bl" data-lang-zh>按右键打开翻译器</div>
-        <div class="card-title bl" data-lang-en>Right Click Translator</div>
-        <div class="card-sub bl" data-lang-zh>语言解谜 · 主策划</div>
-        <div class="card-sub bl" data-lang-en>Language Puzzle · Lead Designer</div>
-      </div>
-    </div>
-    <div class="featured-card" onclick="scrollToProject('p2')">
-      <div class="card-visual visual-maggie">
-        <span class="emoji-icon">🌿</span>
-      </div>
-      <div class="card-info">
-        <span class="card-badge badge-shipped">✦ 已发布</span>
-        <div class="card-title bl" data-lang-zh>麦琪的花园</div>
-        <div class="card-title bl" data-lang-en>Maggie's Garden</div>
-        <div class="card-sub bl" data-lang-zh>AI生存建造 · 任务策划</div>
-        <div class="card-sub bl" data-lang-en>AI Survival · Quest Designer</div>
-      </div>
-    </div>
-    <div class="featured-card wide" onclick="scrollToProject('p3')">
-      <div class="card-visual visual-widget" style="min-height:72px;">
-        <span class="emoji-icon">⚡</span>
-      </div>
-      <div class="card-info">
-        <span class="card-badge badge-wip">◉ In Progress</span>
-        <div class="card-title">Widget Idle</div>
-        <div class="card-sub bl" data-lang-zh>增量游戏 · 毕业设计 · A/B测试研究</div>
-        <div class="card-sub bl" data-lang-en>Incremental Game · Capstone · A/B Testing Research</div>
-      </div>
-    </div>
-  </div>
+            <div class="contribution-section">
+                <div class="contrib-item">
+                    <h4 data-i18n="detail1Contrib1Title">Quest Framework Redesign</h4>
+                    <p data-i18n="detail1Contrib1Desc">Restructured...</p>
+                </div>
+                <div class="contrib-item">
+                    <h4 data-i18n="detail1Contrib2Title">LLM Pipeline Design</h4>
+                    <p data-i18n="detail1Contrib2Desc">Designed...</p>
+                </div>
+                <div class="contrib-item">
+                    <h4 data-i18n="detail1Contrib3Title">Production & PV</h4>
+                    <p data-i18n="detail1Contrib3Desc">Managed...</p>
+                </div>
+            </div>
+        </section>
 
-  <div class="scroll-hint bl" data-lang-zh>↓ 下滑查看详情</div>
-  <div class="scroll-hint bl" data-lang-en>↓ Scroll for details</div>
-</div>
+        <!-- Project: Widget Idle -->
+        <section id="widget-idle" class="project-detail">
+            <div class="project-header">
+                <h2 data-i18n="detail2Title">Widget Idle</h2>
+                <p class="subtitle" data-i18n="detail2Subtitle">Gear-Driven Desktop Idle Game | Systems Design & Full-Stack Dev | MFA Capstone</p>
+            </div>
+            
+            <div class="media-container">
+                <div class="media-scroller">
+                    <div class="media-item">
+                        <video class="project-video" muted playsinline loop poster="assets/widget_idle_poster.jpg">
+                            <source src="assets/widget_idle.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-pause-overlay"></div>
+                    </div>
+                    <div class="media-item">
+                        <img src="assets/widget_idle_1.jpg" alt="Widget Idle Screenshot 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="placeholder-text" style="display:none;">Screenshot 1</div>
+                    </div>
+                    <div class="media-item">
+                        <img src="assets/widget_idle_2.jpg" alt="Widget Idle Screenshot 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="placeholder-text" style="display:none;">Screenshot 2</div>
+                    </div>
+                </div>
+                <div class="swipe-hint">
+                    <div class="arrow-animation">⟷</div>
+                </div>
+            </div>
 
-<!-- ============ PROJECT DETAILS ============ -->
-<div class="divider"></div>
-<section class="section">
-  <div class="section-label">01 Projects</div>
+            <div class="project-description">
+                <p data-i18n="detail2Intro">An idle game...</p>
+            </div>
 
-  <!-- P1: 翻译器 -->
-  <div class="project-detail" id="p1">
-    <div class="project-detail-visual visual-translator">
-      <span class="emoji-icon">🔤</span>
-    </div>
-    <div class="project-detail-body">
-      <div class="project-role bl" data-lang-zh>主策划 · Lead Designer</div>
-      <div class="project-role bl" data-lang-en>Lead Designer</div>
-      <div class="project-detail-title bl" data-lang-zh>按右键打开翻译器</div>
-      <div class="project-detail-title bl" data-lang-en>Right Click to Open Translator</div>
-      <div class="project-detail-desc bl" data-lang-zh>
-        横板冒险语言解谜游戏。玩家跟随神秘猫咪穿越到语言不通的异世界，在解谜中习得词汇、理解规则、揭开秘密。参考自然语言与人造语，结合普遍语法理论设计游戏内语言系统。<br><br>
-        🏆 2024 CUSGA 全国大学生游戏开发大赛 · 最佳解谜游戏
-      </div>
-      <div class="project-detail-desc bl" data-lang-en>
-        A side-scrolling adventure language puzzle game. Players follow a mysterious cat into a world with an unknown language, learning vocabulary and rules through puzzles. Designed an in-game language system based on natural and constructed languages with universal grammar theory.<br><br>
-        🏆 2024 CUSGA National Game Dev Competition · Best Puzzle Game
-      </div>
-      <div class="project-detail-tags">
-        <span class="detail-tag">Unity</span>
-        <span class="detail-tag ib" data-lang-zh>语言设计</span>
-        <span class="detail-tag ib" data-lang-en>Language Design</span>
-        <span class="detail-tag ib" data-lang-zh>谜题设计</span>
-        <span class="detail-tag ib" data-lang-en>Puzzle Design</span>
-        <span class="detail-tag ib" data-lang-zh>叙事</span>
-        <span class="detail-tag ib" data-lang-en>Narrative</span>
-        <span class="detail-tag">CUSGA 2024</span>
-      </div>
-    </div>
-  </div>
+            <div class="contribution-section">
+                <div class="contrib-item">
+                    <h4 data-i18n="detail2Contrib1Title">Gear Economy & Prestige System</h4>
+                    <p data-i18n="detail2Contrib1Desc">Designed...</p>
+                </div>
+                <div class="contrib-item">
+                    <h4 data-i18n="detail2Contrib2Title">A/B Testing Research</h4>
+                    <p data-i18n="detail2Contrib2Desc">Designed...</p>
+                </div>
+                <div class="contrib-item">
+                    <h4 data-i18n="detail2Contrib3Title">Solo Full-Stack Development</h4>
+                    <p data-i18n="detail2Contrib3Desc">React + TypeScript + Electron...</p>
+                </div>
+            </div>
+        </section>
 
-  <!-- P2: 麦琪 -->
-  <div class="project-detail" id="p2">
-    <div class="project-detail-visual visual-maggie">
-      <span class="emoji-icon">🌿</span>
-    </div>
-    <div class="project-detail-body">
-      <div class="project-role bl" data-lang-zh>策划 · 任务设计</div>
-      <div class="project-role bl" data-lang-en>Game Designer · Quest Design</div>
-      <div class="project-detail-title bl" data-lang-zh>麦琪的花园</div>
-      <div class="project-detail-title bl" data-lang-en>Maggie's Garden</div>
-      <div class="project-detail-desc bl" data-lang-zh>
-        俯视角 AI 驱动生存建造游戏（Autogame 实习项目）。重构任务生成与 NPC 系统，提出跟随好感度的角色任务生成框架。设计 LLM 管线与系统提示词，搭建世界知识库架构。<br><br>
-        负责 PV 制作：撰写脚本、引擎内调优录制，发布首周播放量达 50k。
-      </div>
-      <div class="project-detail-desc bl" data-lang-en>
-        A top-down AI-driven survival crafting game (Autogame internship). Rebuilt the quest generation and NPC systems, proposed an affinity-based quest generation framework. Designed LLM pipelines, system prompts, and world knowledge architecture.<br><br>
-        Produced the PV trailer: scripted, captured in-engine, reaching 50k views in the first week.
-      </div>
-      <div class="project-detail-tags">
-        <span class="detail-tag">LLM Pipeline</span>
-        <span class="detail-tag ib" data-lang-zh>任务系统</span>
-        <span class="detail-tag ib" data-lang-en>Quest System</span>
-        <span class="detail-tag ib" data-lang-zh>系统设计</span>
-        <span class="detail-tag ib" data-lang-en>Systems Design</span>
-        <span class="detail-tag">Prompt Engineering</span>
-        <span class="detail-tag">PV</span>
-      </div>
-    </div>
-  </div>
+        <!-- Project: Translator -->
+        <section id="translator" class="project-detail">
+            <div class="project-header">
+                <h2 data-i18n="detail3Title">Right Click to Open Translator</h2>
+                <p class="subtitle" data-i18n="detail3Subtitle">Side-Scrolling Language Puzzle Adventure | Puzzle & Narrative Design | Best Puzzle Game, CUSGA 2024</p>
+            </div>
+            
+            <div class="media-container">
+                <div class="media-scroller">
+                    <div class="media-item">
+                        <video class="project-video" muted playsinline loop poster="assets/translator_poster.jpg">
+                            <source src="assets/translator.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-pause-overlay"></div>
+                    </div>
+                    <div class="media-item">
+                        <img src="assets/translator_1.jpg" alt="Translator Screenshot 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="placeholder-text" style="display:none;">Screenshot 1</div>
+                    </div>
+                    <div class="media-item">
+                        <img src="assets/translator_2.jpg" alt="Translator Screenshot 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="placeholder-text" style="display:none;">Screenshot 2</div>
+                    </div>
+                </div>
+                <div class="swipe-hint">
+                    <div class="arrow-animation">⟷</div>
+                </div>
+            </div>
 
-  <!-- P3: Widget Idle -->
-  <div class="project-detail" id="p3">
-    <div class="project-detail-visual visual-widget">
-      <span class="emoji-icon">⚡</span>
-    </div>
-    <div class="project-detail-body">
-      <div class="project-role bl" data-lang-zh>独立开发 · 设计+开发</div>
-      <div class="project-role bl" data-lang-en>Solo Dev · Design + Development</div>
-      <div class="project-detail-title">Widget Idle</div>
-      <div class="project-detail-desc bl" data-lang-zh>
-        硕士毕业设计。增量游戏，包含 Prestige 重生机制与技能树系统。通过 A/B 测试研究视听反馈对玩家决策行为与留存的影响。独立完成设计与开发。
-      </div>
-      <div class="project-detail-desc bl" data-lang-en>
-        MFA Capstone project. An incremental game featuring Prestige mechanics and skill trees. Conducting A/B testing research on how audiovisual feedback affects player decision-making and retention. Solo designed and developed.
-      </div>
-      <div class="project-detail-tags">
-        <span class="detail-tag">Incremental</span>
-        <span class="detail-tag">A/B Testing</span>
-        <span class="detail-tag ib" data-lang-zh>玩家研究</span>
-        <span class="detail-tag ib" data-lang-en>Player Research</span>
-        <span class="detail-tag">Prestige System</span>
-        <span class="detail-tag">Capstone</span>
-      </div>
-    </div>
-  </div>
-</section>
+            <div class="project-description">
+                <p data-i18n="detail3Intro">A side-scrolling puzzle...</p>
+            </div>
 
-<!-- ============ HIGHLIGHTS ============ -->
-<div class="divider"></div>
-<section class="section">
-  <div class="section-label">02 Highlights</div>
-  <div class="highlights-row">
-    <div class="highlight-card">
-      <div class="highlight-value yellow">🏆</div>
-      <div class="highlight-label bl" data-lang-zh>CUSGA 最佳解谜</div>
-      <div class="highlight-label bl" data-lang-en>CUSGA Best Puzzle</div>
-    </div>
-    <div class="highlight-card">
-      <div class="highlight-value green">50k</div>
-      <div class="highlight-label bl" data-lang-zh>PV 首周播放</div>
-      <div class="highlight-label bl" data-lang-en>PV Views (Week 1)</div>
-    </div>
-  </div>
-  <div class="highlights-row">
-    <div class="highlight-card">
-      <div class="highlight-value blue">4.0</div>
-      <div class="highlight-label bl" data-lang-zh>研究生 GPA</div>
-      <div class="highlight-label bl" data-lang-en>Graduate GPA</div>
-    </div>
-    <div class="highlight-card">
-      <div class="highlight-value accent">CS</div>
-      <div class="highlight-label bl" data-lang-zh>计算机本科 · Top 10%</div>
-      <div class="highlight-label bl" data-lang-en>CS Undergrad · Top 10%</div>
-    </div>
-  </div>
-</section>
+            <div class="contribution-section">
+                <div class="contrib-item">
+                    <h4 data-i18n="detail3Contrib1Title">Language System & Puzzle Design</h4>
+                    <p data-i18n="detail3Contrib1Desc">Designed...</p>
+                </div>
+                <div class="contrib-item">
+                    <h4 data-i18n="detail3Contrib2Title">Competitor Analysis & Iterative Testing</h4>
+                    <p data-i18n="detail3Contrib2Desc">Analyzed...</p>
+                </div>
+                <div class="contrib-item">
+                    <h4 data-i18n="detail3Contrib3Title">Lead Designer: Scope Management & Narrative</h4>
+                    <p data-i18n="detail3Contrib3Desc">Defined...</p>
+                </div>
+            </div>
+        </section>
 
-<!-- ============ OTHER PROJECTS ============ -->
-<div class="divider"></div>
-<section class="section">
-  <div class="section-label">03 More Projects</div>
-  <div class="mini-grid">
-    <div class="mini-card mini-1">
-      <div class="mini-visual">🧊</div>
-      <div class="mini-info">
-        <div class="mini-title">Mirage</div>
-        <div class="mini-sub bl" data-lang-zh>3D 空间解谜</div>
-        <div class="mini-sub bl" data-lang-en>3D Spatial Puzzle</div>
-      </div>
-    </div>
-    <div class="mini-card mini-2">
-      <div class="mini-visual">☄️</div>
-      <div class="mini-info">
-        <div class="mini-title">Meteor Mash</div>
-        <div class="mini-sub bl" data-lang-zh>动作游戏</div>
-        <div class="mini-sub bl" data-lang-en>Action Game</div>
-      </div>
-    </div>
-    <div class="mini-card mini-3">
-      <div class="mini-visual">⌨️</div>
-      <div class="mini-info">
-        <div class="mini-title">Hell Typer</div>
-        <div class="mini-sub bl" data-lang-zh>打字游戏原型</div>
-        <div class="mini-sub bl" data-lang-en>Typing Game Prototype</div>
-      </div>
-    </div>
-    <div class="mini-card mini-4">
-      <div class="mini-visual">📰</div>
-      <div class="mini-info">
-        <div class="mini-title">Legitimancy</div>
-        <div class="mini-sub bl" data-lang-zh>策略模拟</div>
-        <div class="mini-sub bl" data-lang-en>Strategy Simulation</div>
-      </div>
-    </div>
-  </div>
-</section>
+        <hr class="divider">
 
-<!-- ============ ABOUT ============ -->
-<div class="divider"></div>
-<section class="section">
-  <div class="section-label">04 About</div>
+        <!-- About Me -->
+        <section id="about" class="about-section">
+            <h2 data-i18n="aboutTitle">About Me</h2>
+            <p data-i18n="aboutP1">BS in Computer Science...</p>
+            <p data-i18n="aboutP2">My design work...</p>
+            <p data-i18n="aboutP3">I have hands-on project experience...</p>
+            <p data-i18n="aboutP4">My long-term interest lies...</p>
+        </section>
 
-  <div class="bio-card">
-    <div class="bio-text bl" data-lang-zh>
-      游戏设计硕士在读（Northeastern University），本科计算机科学（香港中文大学深圳），曾在 UC Berkeley 交换学习。兼具设计能力与开发能力。
-    </div>
-    <div class="bio-text bl" data-lang-zh>
-      在 Autogame 实习期间负责 AI 驱动游戏的任务系统设计与 LLM 管线开发。热衷系统设计、玩家心理与叙事设计的交叉领域。
-    </div>
-    <div class="bio-text bl" data-lang-en>
-      MFA Game Science & Design candidate at Northeastern University. B.Eng in Computer Science from CUHK-Shenzhen with exchange at UC Berkeley. Combines design thinking with technical ability.
-    </div>
-    <div class="bio-text bl" data-lang-en>
-      Interned at Autogame on AI-driven quest systems and LLM pipeline development. Passionate about the intersection of systems design, player psychology, and narrative.
-    </div>
-  </div>
+        <hr class="divider">
 
-  <div class="bio-card">
-    <div class="section-label" style="margin-bottom:10px;">Education</div>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-year">2024 — 2026</div>
-        <div class="timeline-title">Northeastern University</div>
-        <div class="timeline-sub">MFA Game Science & Design · GPA 4.0</div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-year">2022</div>
-        <div class="timeline-title">UC Berkeley</div>
-        <div class="timeline-sub bl" data-lang-zh>交换学习 · AI · 算法 · 认知科学</div>
-        <div class="timeline-sub bl" data-lang-en>Exchange · AI · Algorithms · Cognitive Science</div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-year">2019 — 2024</div>
-        <div class="timeline-title bl" data-lang-zh>香港中文大学（深圳）</div>
-        <div class="timeline-title bl" data-lang-en>CUHK-Shenzhen</div>
-        <div class="timeline-sub bl" data-lang-zh>计算机科学与技术 · GPA 3.5 · Top 10%</div>
-        <div class="timeline-sub bl" data-lang-en>B.Eng Computer Science · GPA 3.5 · Top 10%</div>
-      </div>
-    </div>
-  </div>
+        <!-- Contact -->
+        <section id="contact" class="contact-section">
+            <h2 data-i18n="contactTitle">Contact</h2>
+            <div class="contact-links">
+                <a href="mailto:zzzhz0817@gmail.com" class="contact-btn email-btn">
+                    <span class="icon">✉️</span> <span data-i18n="contactEmail">Email: zzzhz0817@gmail.com</span>
+                </a>
+                <a href="https://linkedin.com/in/zzzhz" target="_blank" class="contact-btn">
+                    <span class="icon">💼</span> <span data-i18n="contactLinkedIn">LinkedIn</span>
+                </a>
+                <a href="https://zzzhz.itch.io" target="_blank" class="contact-btn">
+                    <span class="icon">🎮</span> <span data-i18n="contactItch">itch.io: zzzhz.itch.io</span>
+                </a>
+                <a href="assets/Hanzhe_Zhang_Resume.pdf" target="_blank" class="contact-btn primary-btn">
+                    <span class="icon">📄</span> <span data-i18n="contactResume">Resume (PDF)</span>
+                </a>
+                <a href="https://github.com/zzzhz0817" target="_blank" class="contact-btn">
+                    <span class="icon">🐙</span> <span data-i18n="contactGithub">GitHub</span>
+                </a>
+            </div>
+        </section>
+        
+        <footer class="footer">
+            <p>&copy; 2026 Hanzhe Zhang</p>
+        </footer>
+    </main>
 
-  <div class="bio-card">
-    <div class="section-label" style="margin-bottom:10px;">Skills</div>
-    <div class="skills-grid">
-      <span class="skill-chip hl ib" data-lang-zh>游戏设计</span>
-      <span class="skill-chip hl ib" data-lang-en>Game Design</span>
-      <span class="skill-chip hl ib" data-lang-zh>系统设计</span>
-      <span class="skill-chip hl ib" data-lang-en>Systems Design</span>
-      <span class="skill-chip hl ib" data-lang-zh>任务设计</span>
-      <span class="skill-chip hl ib" data-lang-en>Quest Design</span>
-      <span class="skill-chip ib" data-lang-zh>关卡设计</span>
-      <span class="skill-chip ib" data-lang-en>Level Design</span>
-      <span class="skill-chip ib" data-lang-zh>叙事设计</span>
-      <span class="skill-chip ib" data-lang-en>Narrative Design</span>
-      <span class="skill-chip ib" data-lang-zh>玩家研究</span>
-      <span class="skill-chip ib" data-lang-en>Player Research</span>
-      <span class="skill-chip">Unity</span>
-      <span class="skill-chip">Unreal</span>
-      <span class="skill-chip">Python</span>
-      <span class="skill-chip">C# / C++</span>
-      <span class="skill-chip">Prompt Engineering</span>
-      <span class="skill-chip">LLM Pipeline</span>
-      <span class="skill-chip">Blender</span>
-      <span class="skill-chip ib" data-lang-zh>本地化</span>
-      <span class="skill-chip ib" data-lang-en>Localization</span>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CONTACT ============ -->
-<div class="divider"></div>
-<section class="contact-section">
-  <div class="section-label">05 Contact</div>
-  <div class="contact-card">
-    <div class="contact-title bl" data-lang-zh>一起做有趣的事</div>
-    <div class="contact-title bl" data-lang-en>Let's Make Something Fun</div>
-    <div class="contact-sub bl" data-lang-zh>正在寻找游戏设计方向的全职机会</div>
-    <div class="contact-sub bl" data-lang-en>Looking for full-time game design opportunities</div>
-    <div class="contact-buttons">
-      <a href="mailto:zzzhz0817@gmail.com" class="contact-btn primary">
-        <span class="btn-icon">✉</span> zzzhz0817@gmail.com
-      </a>
-      <a href="#" class="contact-btn secondary">
-        <span class="btn-icon">◆</span> LinkedIn
-      </a>
-      <a href="#" class="contact-btn secondary bl" data-lang-zh>
-        <span class="btn-icon">▼</span> 下载简历 PDF
-      </a>
-      <a href="#" class="contact-btn secondary bl" data-lang-en>
-        <span class="btn-icon">▼</span> Download Resume
-      </a>
-    </div>
-  </div>
-</section>
-
-<div class="footer">© 2026 zzzhz.games</div>
-
-<!-- Language Toggle -->
-<button class="lang-fab" id="langBtn" onclick="toggleLang()">EN</button>
-
-<script>
-  // Detect browser language, default to Chinese
-  let currentLang = 'zh';
-
-  function initLang() {
-    const browserLang = navigator.language || navigator.userLanguage || '';
-    // If browser is English, default to English
-    if (browserLang.startsWith('en')) {
-      currentLang = 'en';
-    }
-    applyLang();
-  }
-
-  function applyLang() {
-    const html = document.documentElement;
-    html.classList.remove('lang-zh', 'lang-en');
-    html.classList.add('lang-' + currentLang);
-    
-    // Update FAB button text
-    const btn = document.getElementById('langBtn');
-    btn.textContent = currentLang === 'zh' ? 'EN' : '中';
-    
-    // Update page title
-    document.title = currentLang === 'zh' 
-      ? '张涵哲 — 游戏设计师' 
-      : 'Hanzhe Zhang — Game Designer';
-  }
-
-  function toggleLang() {
-    currentLang = currentLang === 'zh' ? 'en' : 'zh';
-    applyLang();
-  }
-
-  function scrollToProject(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  // Init
-  initLang();
-</script>
-
+    <script src="i18n.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
