@@ -100,9 +100,7 @@
     letter-spacing: 1px;
     line-height: 1.2;
     margin-bottom: 4px;
-    background: linear-gradient(135deg, #1a1f36 0%, #4f46e5 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text);
   }
 
   .name-en {
@@ -113,30 +111,34 @@
     letter-spacing: 0.5px;
   }
 
-  .avatar {
-    width: 64px;
-    height: 64px;
-    border-radius: 18px;
-    background: var(--surface2);
-    overflow: hidden;
-    flex-shrink: 0;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .avatar-placeholder {
-    width: 100%;
-    height: 100%;
+  .lang-toggle-top {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
-    background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, background 0.2s;
+    flex-shrink: 0;
+  }
+
+  .lang-toggle-top:active {
+    transform: scale(0.92);
+  }
+
+  .card-desc-inline {
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    font-weight: 500;
+    margin-left: 6px;
   }
 
   /* Tags */
@@ -599,31 +601,6 @@
     letter-spacing: 1px;
   }
 
-  /* Lang FAB */
-  .lang-fab {
-    position: fixed;
-    bottom: 24px;
-    right: max(24px, calc((100vw - 480px) / 2 + 24px));
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #ffffff;
-    border: 1px solid var(--border-light);
-    color: var(--accent);
-    font-size: 0.8rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-family: 'Space Grotesk', sans-serif;
-    z-index: 100;
-    transition: transform 0.2s;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  }
-
-  .lang-fab:active { transform: scale(0.9); }
-
   /* Desktop frame */
   @media (min-width: 481px) {
     body {
@@ -642,13 +619,10 @@
     <div class="identity">
       <div class="name-cn bl" data-lang-zh>张涵哲</div>
       <div class="name-cn bl" data-lang-en>Hanzhe Zhang</div>
-      <div class="name-en bl" data-lang-zh>Game Designer | MFA in Game Science & Design ’26</div>
-      <div class="name-en bl" data-lang-en>Game Designer | MFA in Game Science & Design ’26</div>
+      <div class="name-en bl" data-lang-zh>游戏设计师 | 游戏设计硕士 ’26</div>
+      <div class="name-en bl" data-lang-en>Game Designer | MFA Game Design ’26</div>
     </div>
-    <div class="avatar">
-      <!-- 占位图，有了头像图片可以替换这里的 placeholder -->
-      <div class="avatar-placeholder">🎮</div>
-    </div>
+    <button class="lang-toggle-top" id="langBtn" onclick="toggleLang()">EN</button>
   </div>
 
   <!-- Chinese tags -->
@@ -675,10 +649,10 @@
         <!-- <img src="assets/magiscape_banner.jpg" alt="MagiScape"> -->
       </div>
       <div class="card-info">
-        <div class="card-title bl" data-lang-zh>麦琪的花园 MagiScape</div>
-        <div class="card-title bl" data-lang-en>MagiScape</div>
-        <div class="card-sub bl" data-lang-zh>AI生存建造 · GenAI系统策划</div>
-        <div class="card-sub bl" data-lang-en>AI Survival Builder · GenAI Systems Design</div>
+        <div class="card-title bl" data-lang-zh>麦琪的花园 MagiScape <span class="card-desc-inline">AI生存建造</span></div>
+        <div class="card-title bl" data-lang-en>MagiScape <span class="card-desc-inline">AI Survival Builder</span></div>
+        <div class="card-sub bl" data-lang-zh>GenAI系统策划</div>
+        <div class="card-sub bl" data-lang-en>GenAI Systems Design</div>
       </div>
     </div>
 
@@ -688,10 +662,10 @@
         <!-- <img src="assets/widget_banner.jpg" alt="Widget Idle"> -->
       </div>
       <div class="card-info">
-        <div class="card-title bl" data-lang-zh>Widget Idle</div>
-        <div class="card-title bl" data-lang-en>Widget Idle</div>
-        <div class="card-sub bl" data-lang-zh>桌面放置游戏 · 系统设计 & 全栈开发</div>
-        <div class="card-sub bl" data-lang-en>Desktop Idle Game · Systems Design & Full-Stack Dev</div>
+        <div class="card-title bl" data-lang-zh>Widget Idle <span class="card-desc-inline">桌面放置游戏</span></div>
+        <div class="card-title bl" data-lang-en>Widget Idle <span class="card-desc-inline">Desktop Idle Game</span></div>
+        <div class="card-sub bl" data-lang-zh>系统设计 & 全栈开发</div>
+        <div class="card-sub bl" data-lang-en>Systems Design & Full-Stack Dev</div>
       </div>
     </div>
 
@@ -701,12 +675,10 @@
         <!-- <img src="assets/translator_banner.jpg" alt="Translator"> -->
       </div>
       <div class="card-info">
-        <span class="card-badge badge-award bl" data-lang-zh>🏆 CUSGA最佳解谜</span>
-        <span class="card-badge badge-award bl" data-lang-en>🏆 Best Puzzle, CUSGA</span>
-        <div class="card-title bl" data-lang-zh>按右键打开翻译器</div>
-        <div class="card-title bl" data-lang-en>Right Click to Open Translator</div>
-        <div class="card-sub bl" data-lang-zh>谜题与叙事设计</div>
-        <div class="card-sub bl" data-lang-en>Puzzle & Narrative Design</div>
+        <div class="card-title bl" data-lang-zh>按右键打开翻译器 <span class="card-desc-inline">解谜冒险</span></div>
+        <div class="card-title bl" data-lang-en>Right Click to Open Translator <span class="card-desc-inline">Puzzle Adventure</span></div>
+        <div class="card-sub bl" data-lang-zh>谜题与叙事设计 | 🏆 CUSGA最佳解谜</div>
+        <div class="card-sub bl" data-lang-en>Puzzle & Narrative Design | 🏆 Best Puzzle, CUSGA</div>
       </div>
     </div>
   </div>
@@ -986,9 +958,6 @@
 </section>
 
 <div class="footer">© 2026 Hanzhe Zhang</div>
-
-<!-- Language Toggle -->
-<button class="lang-fab" id="langBtn" onclick="toggleLang()">EN</button>
 
 <script>
   // Setup Language
