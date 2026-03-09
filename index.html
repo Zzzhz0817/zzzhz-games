@@ -646,7 +646,8 @@
     <!-- MagiScape -->
     <div class="featured-card" onclick="scrollToProject('p-magiscape')">
       <div class="card-visual visual-maggie">
-        <!-- <img src="assets/magiscape_banner.jpg" alt="MagiScape"> -->
+        <img src="assets/magiscape_zh.png" alt="MagiScape" class="bl" data-lang-zh>
+        <img src="assets/magiscape_en.png" alt="MagiScape" class="bl" data-lang-en>
       </div>
       <div class="card-info">
         <div class="card-title bl" data-lang-zh>麦琪的花园 MagiScape <span class="card-desc-inline">AI生存建造</span></div>
@@ -659,7 +660,7 @@
     <!-- Widget Idle -->
     <div class="featured-card" onclick="scrollToProject('p-widget')">
       <div class="card-visual visual-widget">
-        <!-- <img src="assets/widget_banner.jpg" alt="Widget Idle"> -->
+        <video src="assets/widget.mp4" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
       </div>
       <div class="card-info">
         <div class="card-title bl" data-lang-zh>Widget Idle <span class="card-desc-inline">桌面放置游戏</span></div>
@@ -672,7 +673,8 @@
     <!-- Translator -->
     <div class="featured-card" onclick="scrollToProject('p-translator')">
       <div class="card-visual visual-translator">
-        <!-- <img src="assets/translator_banner.jpg" alt="Translator"> -->
+        <img src="assets/translator_zh.png" alt="Translator" class="bl" data-lang-zh>
+        <img src="assets/translator_en.png" alt="Translator" class="bl" data-lang-en>
       </div>
       <div class="card-info">
         <div class="card-title bl" data-lang-zh>按右键打开翻译器 <span class="card-desc-inline">CUSGA最佳解谜</span></div>
@@ -695,23 +697,25 @@
   <div class="project-detail" id="p-magiscape">
     <div class="media-container" style="position:relative;">
       <div class="media-scroller">
-        <div class="media-item paused">
-          <!-- 替换为真实视频路径 -->
-          <video class="project-video" muted playsinline loop poster="assets/magiscape_poster.jpg">
-              <source src="assets/magiscape.mp4" type="video/mp4">
+        <div class="media-item paused fl" data-lang-zh>
+          <video class="project-video" muted playsinline loop poster="assets/magiscape_zh.png">
+              <source src="assets/magiscape_zh.mp4" type="video/mp4">
           </video>
           <div class="play-pause-overlay"></div>
         </div>
-        <div class="media-item" style="background:#e2e8f0;">
-          <div style="color:var(--text-faint); font-weight:500;">Screenshot 1</div>
-          <!-- <img src="assets/magiscape_1.jpg" alt="Screenshot 1"> -->
+        <div class="media-item paused fl" data-lang-en>
+          <video class="project-video" muted playsinline loop poster="assets/magiscape_en.png">
+              <source src="assets/magiscape_en.mp4" type="video/mp4">
+          </video>
+          <div class="play-pause-overlay"></div>
         </div>
-        <div class="media-item" style="background:#cbd5e1;">
-          <div style="color:var(--text-faint); font-weight:500;">Screenshot 2</div>
-          <!-- <img src="assets/magiscape_2.jpg" alt="Screenshot 2"> -->
+        <div class="media-item">
+          <img src="assets/magiscape_zh_1.png" alt="MagiScape Screenshot 1">
+        </div>
+        <div class="media-item">
+          <img src="assets/magiscape_zh_2.png" alt="MagiScape Screenshot 2">
         </div>
       </div>
-      <div class="swipe-hint"><div class="arrow-anim">←</div></div>
     </div>
 
     <div class="project-detail-body">
@@ -762,16 +766,24 @@
     <div class="media-container" style="position:relative;">
       <div class="media-scroller">
         <div class="media-item paused">
-          <video class="project-video" muted playsinline loop poster="assets/widget_poster.jpg">
+          <video class="project-video" muted playsinline loop>
               <source src="assets/widget.mp4" type="video/mp4">
           </video>
           <div class="play-pause-overlay"></div>
         </div>
-        <div class="media-item" style="background:#e2e8f0;">
-          <div style="color:var(--text-faint); font-weight:500;">Screenshot 1</div>
+        <div class="media-item">
+          <img src="assets/widget_1.png" alt="Widget Idle Screenshot 1">
+        </div>
+        <div class="media-item">
+          <img src="assets/widget_2.png" alt="Widget Idle Screenshot 2">
+        </div>
+        <div class="media-item">
+          <img src="assets/widget_3.png" alt="Widget Idle Screenshot 3">
+        </div>
+        <div class="media-item">
+          <img src="assets/widget_4.png" alt="Widget Idle Screenshot 4">
         </div>
       </div>
-      <div class="swipe-hint"><div class="arrow-anim">←</div></div>
     </div>
 
     <div class="project-detail-body">
@@ -821,16 +833,31 @@
     <div class="media-container" style="position:relative;">
       <div class="media-scroller">
         <div class="media-item paused">
-          <video class="project-video" muted playsinline loop poster="assets/translator_poster.jpg">
+          <video class="project-video" muted playsinline loop poster="assets/translator_zh.png">
               <source src="assets/translator.mp4" type="video/mp4">
           </video>
           <div class="play-pause-overlay"></div>
         </div>
-        <div class="media-item" style="background:#e2e8f0;">
-          <div style="color:var(--text-faint); font-weight:500;">Screenshot 1</div>
+        
+        <!-- EN screenshots -->
+        <div class="media-item fl" data-lang-en>
+          <img src="assets/translator_en_1.png" alt="Translator Screenshot 1">
+        </div>
+        <div class="media-item fl" data-lang-en>
+          <img src="assets/translator_en_2.png" alt="Translator Screenshot 2">
+        </div>
+        <div class="media-item fl" data-lang-en>
+          <img src="assets/translator_en_3.png" alt="Translator Screenshot 3">
+        </div>
+
+        <!-- ZH screenshots -->
+        <div class="media-item fl" data-lang-zh>
+          <img src="assets/translator_zh_1.png" alt="Translator Screenshot 1">
+        </div>
+        <div class="media-item fl" data-lang-zh>
+          <img src="assets/translator_zh_2.png" alt="Translator Screenshot 2">
         </div>
       </div>
-      <div class="swipe-hint"><div class="arrow-anim">←</div></div>
     </div>
 
     <div class="project-detail-body">
