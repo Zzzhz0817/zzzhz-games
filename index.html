@@ -1,248 +1,1122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hanzhe Zhang | Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>张涵哲 — 游戏设计师</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* 明亮多巴胺/白色系主题 */
+    --bg: #fdfdfd;
+    --surface: #ffffff;
+    --surface2: #f1f5f9;
+    --text: #1a1f36;
+    --text-dim: #64748b;
+    --text-faint: #94a3b8;
+    
+    /* 多巴胺点缀色 */
+    --accent: #4f46e5;
+    --accent-soft: rgba(79, 70, 229, 0.08);
+    --blue: #3b82f6;
+    --green: #10b981;
+    --yellow: #f59e0b;
+    --orange: #f97316;
+    --pink: #ec4899;
+
+    --radius: 20px;
+    --radius-sm: 12px;
+    
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
+    --border-light: rgba(0,0,0,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans SC', 'Space Grotesk', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Language toggle visibility logic */
+  [data-lang-zh] { display: none !important; }
+  [data-lang-en] { display: none !important; }
+  
+  html.lang-zh .bl[data-lang-zh] { display: block !important; }
+  html.lang-en .bl[data-lang-en] { display: block !important; }
+  html.lang-zh .il[data-lang-zh] { display: inline !important; }
+  html.lang-en .il[data-lang-en] { display: inline !important; }
+  html.lang-zh .fl[data-lang-zh] { display: flex !important; }
+  html.lang-en .fl[data-lang-en] { display: flex !important; }
+  html.lang-zh .ib[data-lang-zh] { display: inline-block !important; }
+  html.lang-en .ib[data-lang-en] { display: inline-block !important; }
+
+  /* ====== HERO ====== */
+  .hero {
+    padding: 32px 24px 20px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Decorative background blur */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(79,70,229,0.1) 0%, rgba(253,253,253,0) 70%);
+    border-radius: 50%;
+    z-index: -1;
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+
+  .identity { flex: 1; }
+
+  .name-cn {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, #1a1f36 0%, #4f46e5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .name-en {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: var(--surface2);
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+  }
+
+  /* Tags */
+  .tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+    border: 1px solid var(--border-light);
+  }
+
+  .tag-primary {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: transparent;
+  }
+
+  .tag-outline {
+    background: var(--surface);
+    color: var(--text-dim);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Slogan */
+  .slogan {
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    line-height: 1.8;
+  }
+
+  .slogan strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* Featured Grid */
+  .featured-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .featured-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+  }
+
+  .featured-card:active { transform: scale(0.98); }
+
+  .card-visual {
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card-visual img, .card-visual video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .visual-maggie { background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); }
+  .visual-widget { background: linear-gradient(120deg, #ffecd2 0%, #fcb69f 100%); }
+  .visual-translator { background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%); }
+
+  .card-info { padding: 16px; }
+
+  .card-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-shipped { background: rgba(16, 185, 129, 0.1); color: var(--green); }
+  .badge-wip { background: rgba(249, 115, 22, 0.1); color: var(--orange); }
+  .badge-award { background: rgba(245, 158, 11, 0.1); color: var(--yellow); }
+
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+
+  .card-sub {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+
+  /* Scroll hint */
+  .scroll-hint {
+    text-align: center;
+    padding: 20px 0 10px;
+    color: var(--text-faint);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    animation: pulse 2s ease-in-out infinite;
+    font-weight: 500;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(4px); }
+  }
+
+  /* ====== SECTIONS ====== */
+  .section { padding: 32px 24px; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-light);
+  }
+
+  /* Project detail */
+  .project-detail {
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+    scroll-margin-top: 20px;
+  }
+
+  /* Media Scroller */
+  .media-scroller {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    height: 220px;
+    background: var(--surface2);
+  }
+  .media-scroller::-webkit-scrollbar { display: none; }
+
+  .media-item {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .media-item video, .media-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Play/Pause Overlay for Video */
+  .play-pause-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .play-pause-overlay::after {
+    content: "▶";
+    color: var(--accent);
+    font-size: 20px;
+    margin-left: 4px;
+  }
+
+  .media-item.paused .play-pause-overlay { opacity: 1; }
+  .media-item.playing .play-pause-overlay { opacity: 0; }
+
+  /* Swipe Hint */
+  .swipe-hint {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 15%;
+    background: linear-gradient(to right, rgba(255,255,255,0), rgba(0,0,0,0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    z-index: 2;
+  }
+  .swipe-hint.hidden { opacity: 0; }
+  .arrow-anim {
+    color: white;
+    font-size: 20px;
+    animation: bounceRight 1.5s infinite;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+
+  @keyframes bounceRight {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-6px); }
+  }
+
+
+  .project-detail-body { padding: 20px; }
+
+  .project-role {
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .project-detail-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .project-detail-desc {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-weight: 400;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  /* Contribution Blocks inside detail */
+  .contrib-block {
+    background: var(--surface2);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    margin-bottom: 12px;
+    border-left: 4px solid var(--accent);
+  }
+  
+  #p2 .contrib-block { border-left-color: var(--orange); }
+  #p1 .contrib-block { border-left-color: var(--blue); }
+
+  .contrib-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .contrib-desc {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* Bio & About (Based on template) */
+  .bio-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+  }
+
+  .bio-text {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .bio-text:last-child { margin-bottom: 0; }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 20px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--border-light);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 20px;
+    padding-left: 8px;
+  }
+
+  .timeline-item:last-child { padding-bottom: 0; }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -21px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--text-faint);
+  }
+
+  .timeline-item:first-child::before {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+
+  .timeline-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: var(--text);
+  }
+
+  .timeline-sub {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+
+  /* Contact */
+  .contact-section { padding: 32px 24px 60px; }
+
+  .contact-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+  }
+
+  .contact-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .contact-sub {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-weight: 400;
+    margin-bottom: 24px;
+  }
+
+  .contact-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s, background 0.2s;
+  }
+
+  .contact-btn:active { transform: scale(0.98); }
+  .contact-btn.primary { 
+    background: var(--accent); 
+    color: #fff; 
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+  }
+  .contact-btn.secondary { 
+    background: var(--surface2); 
+    color: var(--text); 
+    border: 1px solid var(--border-light);
+  }
+  .contact-btn .btn-icon { font-size: 1.1rem; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+  }
+
+  /* Lang FAB */
+  .lang-fab {
+    position: fixed;
+    bottom: 24px;
+    right: max(24px, calc((100vw - 480px) / 2 + 24px));
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    z-index: 100;
+    transition: transform 0.2s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  }
+
+  .lang-fab:active { transform: scale(0.9); }
+
+  /* Desktop frame */
+  @media (min-width: 481px) {
+    body {
+      border-left: 1px solid var(--border-light);
+      border-right: 1px solid var(--border-light);
+      box-shadow: 0 0 40px rgba(0,0,0,0.05);
+    }
+  }
+</style>
 </head>
 <body>
-    <header class="top-nav">
-        <button id="lang-toggle" data-i18n="navToggle">中</button>
-    </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1 data-i18n="heroName">Hanzhe Zhang</h1>
-            <p class="title" data-i18n="heroTitle">Game Designer | MFA in Game Science & Design ’26</p>
-            <div class="tags">
-                <span class="tag" data-i18n="tag1">Technical Design</span>
-                <span class="tag" data-i18n="tag2">AI + Games</span>
-                <span class="tag" data-i18n="tag3">Systems Design</span>
-                <span class="tag" data-i18n="tag4">Quest & Narrative</span>
-            </div>
-        </section>
+<!-- ============ FIRST SCREEN ============ -->
+<div class="hero">
+  <div class="hero-top">
+    <div class="identity">
+      <div class="name-cn bl" data-lang-zh>张涵哲</div>
+      <div class="name-cn bl" data-lang-en>Hanzhe Zhang</div>
+      <div class="name-en bl" data-lang-zh>Game Designer | MFA in Game Science & Design ’26</div>
+      <div class="name-en bl" data-lang-en>Game Designer | MFA in Game Science & Design ’26</div>
+    </div>
+    <div class="avatar">
+      <!-- 占位图，有了头像图片可以替换这里的 placeholder -->
+      <div class="avatar-placeholder">🎮</div>
+    </div>
+  </div>
 
-        <!-- Projects Overview -->
-        <section class="projects-overview">
-            <a href="#magiscape" class="project-card">
-                <div class="card-image-placeholder magiscape-bg"></div>
-                <div class="card-content">
-                    <h3 data-i18n="proj1Title">MagiScape</h3>
-                    <p data-i18n="proj1Desc">AI Survival Builder · GenAI Systems Design</p>
-                </div>
-            </a>
-            <a href="#widget-idle" class="project-card">
-                <div class="card-image-placeholder widget-idle-bg"></div>
-                <div class="card-content">
-                    <h3 data-i18n="proj2Title">Widget Idle</h3>
-                    <p data-i18n="proj2Desc">Desktop Idle Game · Systems Design & Full-Stack Dev</p>
-                </div>
-            </a>
-            <a href="#translator" class="project-card">
-                <div class="card-image-placeholder translator-bg"></div>
-                <div class="card-content">
-                    <h3 data-i18n="proj3Title">Right Click to Open Translator</h3>
-                    <p data-i18n="proj3Desc">Best Puzzle Game, CUSGA 2024 · Puzzle & Narrative Design</p>
-                </div>
-            </a>
-        </section>
+  <!-- Chinese tags -->
+  <div class="tags fl" data-lang-zh>
+    <span class="tag tag-primary">技术策划</span>
+    <span class="tag tag-outline">AI + 游戏</span>
+    <span class="tag tag-outline">系统设计</span>
+    <span class="tag tag-outline">任务与叙事</span>
+  </div>
 
-        <hr class="divider">
+  <!-- English tags -->
+  <div class="tags fl" data-lang-en>
+    <span class="tag tag-primary">Technical Design</span>
+    <span class="tag tag-outline">AI + Games</span>
+    <span class="tag tag-outline">Systems Design</span>
+    <span class="tag tag-outline">Quest & Narrative</span>
+  </div>
 
-        <!-- Project: MagiScape -->
-        <section id="magiscape" class="project-detail">
-            <div class="project-header">
-                <h2 data-i18n="detail1Title">MagiScape</h2>
-                <p class="subtitle" data-i18n="detail1Subtitle">LLM-Driven Survival Builder | GenAI Systems Design (Internship)</p>
-            </div>
-            
-            <div class="media-container">
-                <div class="media-scroller">
-                    <div class="media-item">
-                        <video class="project-video" muted playsinline loop poster="assets/magiscape_poster.jpg">
-                            <source src="assets/magiscape.mp4" type="video/mp4">
-                        </video>
-                        <div class="play-pause-overlay"></div>
-                    </div>
-                    <div class="media-item">
-                        <img src="assets/magiscape_1.jpg" alt="MagiScape Screenshot 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <div class="placeholder-text" style="display:none;">Screenshot 1</div>
-                    </div>
-                    <div class="media-item">
-                        <img src="assets/magiscape_2.jpg" alt="MagiScape Screenshot 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <div class="placeholder-text" style="display:none;">Screenshot 2</div>
-                    </div>
-                </div>
-                <!-- Swipe Hint -->
-                <div class="swipe-hint">
-                    <div class="arrow-animation">⟷</div>
-                </div>
-            </div>
+  <!-- Featured projects (shared structure, dual lang content) -->
+  <div class="featured-grid">
+    <!-- MagiScape -->
+    <div class="featured-card" onclick="scrollToProject('p-magiscape')">
+      <div class="card-visual visual-maggie">
+        <!-- <img src="assets/magiscape_banner.jpg" alt="MagiScape"> -->
+      </div>
+      <div class="card-info">
+        <div class="card-title bl" data-lang-zh>麦琪的花园 MagiScape</div>
+        <div class="card-title bl" data-lang-en>MagiScape</div>
+        <div class="card-sub bl" data-lang-zh>AI生存建造 · GenAI系统策划</div>
+        <div class="card-sub bl" data-lang-en>AI Survival Builder · GenAI Systems Design</div>
+      </div>
+    </div>
 
-            <div class="project-description">
-                <p data-i18n="detail1Intro">A top-down survival builder...</p>
-            </div>
+    <!-- Widget Idle -->
+    <div class="featured-card" onclick="scrollToProject('p-widget')">
+      <div class="card-visual visual-widget">
+        <!-- <img src="assets/widget_banner.jpg" alt="Widget Idle"> -->
+      </div>
+      <div class="card-info">
+        <div class="card-title bl" data-lang-zh>Widget Idle</div>
+        <div class="card-title bl" data-lang-en>Widget Idle</div>
+        <div class="card-sub bl" data-lang-zh>桌面放置游戏 · 系统设计 & 全栈开发</div>
+        <div class="card-sub bl" data-lang-en>Desktop Idle Game · Systems Design & Full-Stack Dev</div>
+      </div>
+    </div>
 
-            <div class="contribution-section">
-                <div class="contrib-item">
-                    <h4 data-i18n="detail1Contrib1Title">Quest Framework Redesign</h4>
-                    <p data-i18n="detail1Contrib1Desc">Restructured...</p>
-                </div>
-                <div class="contrib-item">
-                    <h4 data-i18n="detail1Contrib2Title">LLM Pipeline Design</h4>
-                    <p data-i18n="detail1Contrib2Desc">Designed...</p>
-                </div>
-                <div class="contrib-item">
-                    <h4 data-i18n="detail1Contrib3Title">Production & PV</h4>
-                    <p data-i18n="detail1Contrib3Desc">Managed...</p>
-                </div>
-            </div>
-        </section>
+    <!-- Translator -->
+    <div class="featured-card" onclick="scrollToProject('p-translator')">
+      <div class="card-visual visual-translator">
+        <!-- <img src="assets/translator_banner.jpg" alt="Translator"> -->
+      </div>
+      <div class="card-info">
+        <span class="card-badge badge-award bl" data-lang-zh>🏆 CUSGA最佳解谜</span>
+        <span class="card-badge badge-award bl" data-lang-en>🏆 Best Puzzle, CUSGA</span>
+        <div class="card-title bl" data-lang-zh>按右键打开翻译器</div>
+        <div class="card-title bl" data-lang-en>Right Click to Open Translator</div>
+        <div class="card-sub bl" data-lang-zh>谜题与叙事设计</div>
+        <div class="card-sub bl" data-lang-en>Puzzle & Narrative Design</div>
+      </div>
+    </div>
+  </div>
 
-        <!-- Project: Widget Idle -->
-        <section id="widget-idle" class="project-detail">
-            <div class="project-header">
-                <h2 data-i18n="detail2Title">Widget Idle</h2>
-                <p class="subtitle" data-i18n="detail2Subtitle">Gear-Driven Desktop Idle Game | Systems Design & Full-Stack Dev | MFA Capstone</p>
-            </div>
-            
-            <div class="media-container">
-                <div class="media-scroller">
-                    <div class="media-item">
-                        <video class="project-video" muted playsinline loop poster="assets/widget_idle_poster.jpg">
-                            <source src="assets/widget_idle.mp4" type="video/mp4">
-                        </video>
-                        <div class="play-pause-overlay"></div>
-                    </div>
-                    <div class="media-item">
-                        <img src="assets/widget_idle_1.jpg" alt="Widget Idle Screenshot 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <div class="placeholder-text" style="display:none;">Screenshot 1</div>
-                    </div>
-                    <div class="media-item">
-                        <img src="assets/widget_idle_2.jpg" alt="Widget Idle Screenshot 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <div class="placeholder-text" style="display:none;">Screenshot 2</div>
-                    </div>
-                </div>
-                <div class="swipe-hint">
-                    <div class="arrow-animation">⟷</div>
-                </div>
-            </div>
+  <div class="scroll-hint bl" data-lang-zh>↓ 下滑查看详情</div>
+  <div class="scroll-hint bl" data-lang-en>↓ Scroll for details</div>
+</div>
 
-            <div class="project-description">
-                <p data-i18n="detail2Intro">An idle game...</p>
-            </div>
+<!-- ============ PROJECT DETAILS ============ -->
+<section class="section">
+  <div class="section-label">Projects Detail</div>
 
-            <div class="contribution-section">
-                <div class="contrib-item">
-                    <h4 data-i18n="detail2Contrib1Title">Gear Economy & Prestige System</h4>
-                    <p data-i18n="detail2Contrib1Desc">Designed...</p>
-                </div>
-                <div class="contrib-item">
-                    <h4 data-i18n="detail2Contrib2Title">A/B Testing Research</h4>
-                    <p data-i18n="detail2Contrib2Desc">Designed...</p>
-                </div>
-                <div class="contrib-item">
-                    <h4 data-i18n="detail2Contrib3Title">Solo Full-Stack Development</h4>
-                    <p data-i18n="detail2Contrib3Desc">React + TypeScript + Electron...</p>
-                </div>
-            </div>
-        </section>
+  <!-- P1: 麦琪 -->
+  <div class="project-detail" id="p-magiscape">
+    <div class="media-container" style="position:relative;">
+      <div class="media-scroller">
+        <div class="media-item paused">
+          <!-- 替换为真实视频路径 -->
+          <video class="project-video" muted playsinline loop poster="assets/magiscape_poster.jpg">
+              <source src="assets/magiscape.mp4" type="video/mp4">
+          </video>
+          <div class="play-pause-overlay"></div>
+        </div>
+        <div class="media-item" style="background:#e2e8f0;">
+          <div style="color:var(--text-faint); font-weight:500;">Screenshot 1</div>
+          <!-- <img src="assets/magiscape_1.jpg" alt="Screenshot 1"> -->
+        </div>
+        <div class="media-item" style="background:#cbd5e1;">
+          <div style="color:var(--text-faint); font-weight:500;">Screenshot 2</div>
+          <!-- <img src="assets/magiscape_2.jpg" alt="Screenshot 2"> -->
+        </div>
+      </div>
+      <div class="swipe-hint"><div class="arrow-anim">←</div></div>
+    </div>
 
-        <!-- Project: Translator -->
-        <section id="translator" class="project-detail">
-            <div class="project-header">
-                <h2 data-i18n="detail3Title">Right Click to Open Translator</h2>
-                <p class="subtitle" data-i18n="detail3Subtitle">Side-Scrolling Language Puzzle Adventure | Puzzle & Narrative Design | Best Puzzle Game, CUSGA 2024</p>
-            </div>
-            
-            <div class="media-container">
-                <div class="media-scroller">
-                    <div class="media-item">
-                        <video class="project-video" muted playsinline loop poster="assets/translator_poster.jpg">
-                            <source src="assets/translator.mp4" type="video/mp4">
-                        </video>
-                        <div class="play-pause-overlay"></div>
-                    </div>
-                    <div class="media-item">
-                        <img src="assets/translator_1.jpg" alt="Translator Screenshot 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <div class="placeholder-text" style="display:none;">Screenshot 1</div>
-                    </div>
-                    <div class="media-item">
-                        <img src="assets/translator_2.jpg" alt="Translator Screenshot 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <div class="placeholder-text" style="display:none;">Screenshot 2</div>
-                    </div>
-                </div>
-                <div class="swipe-hint">
-                    <div class="arrow-animation">⟷</div>
-                </div>
-            </div>
+    <div class="project-detail-body">
+      <div class="project-role bl" data-lang-zh>LLM驱动的生存建造游戏 | GenAI系统策划（实习）</div>
+      <div class="project-role bl" data-lang-en>LLM-Driven Survival Builder | GenAI Systems Design (Internship)</div>
+      
+      <div class="project-detail-title bl" data-lang-zh>麦琪的花园 MagiScape</div>
+      <div class="project-detail-title bl" data-lang-en>MagiScape</div>
+      
+      <div class="project-detail-desc bl" data-lang-zh>
+        一款俯视角生存建造游戏。NPC由大语言模型驱动，能记住与玩家的互动历史，根据好感度关系动态生成任务和对话。已上线。
+      </div>
+      <div class="project-detail-desc bl" data-lang-en>
+        A top-down survival builder where NPCs are powered by large language models. They remember player interactions, build relationships based on favorability, and dynamically generate quests and dialogue. Shipped.
+      </div>
 
-            <div class="project-description">
-                <p data-i18n="detail3Intro">A side-scrolling puzzle...</p>
-            </div>
+      <!-- Contributions -->
+      <div class="contrib-block bl" data-lang-zh>
+        <div class="contrib-title">任务框架重构</div>
+        <div class="contrib-desc">将原有的一次性任务生成改为模块化架构——把触发条件、交互流程、奖励结构拆分为可组合单元，并引入好感度驱动的任务解锁机制。Beta测试中可玩内容量显著提升。</div>
+      </div>
+      <div class="contrib-block bl" data-lang-zh>
+        <div class="contrib-title">LLM生成管线设计</div>
+        <div class="contrib-desc">设计从世界设定→NPC人设→任务生成→质量校验的完整管线。通过分层prompt注入和世界知识库检索，平衡生成内容的多样性与世界观一致性。</div>
+      </div>
+      <div class="contrib-block bl" data-lang-zh>
+        <div class="contrib-title">项目管理 & PV制作</div>
+        <div class="contrib-desc">管理三次Sprint迭代，协调策划与QA优先级。主导宣传PV全流程，上线一周播放量5万。</div>
+      </div>
 
-            <div class="contribution-section">
-                <div class="contrib-item">
-                    <h4 data-i18n="detail3Contrib1Title">Language System & Puzzle Design</h4>
-                    <p data-i18n="detail3Contrib1Desc">Designed...</p>
-                </div>
-                <div class="contrib-item">
-                    <h4 data-i18n="detail3Contrib2Title">Competitor Analysis & Iterative Testing</h4>
-                    <p data-i18n="detail3Contrib2Desc">Analyzed...</p>
-                </div>
-                <div class="contrib-item">
-                    <h4 data-i18n="detail3Contrib3Title">Lead Designer: Scope Management & Narrative</h4>
-                    <p data-i18n="detail3Contrib3Desc">Defined...</p>
-                </div>
-            </div>
-        </section>
+      <div class="contrib-block bl" data-lang-en>
+        <div class="contrib-title">Quest Framework Redesign</div>
+        <div class="contrib-desc">Restructured the one-shot quest generation into a modular architecture—decomposing triggers, interaction flows, and reward structures into composable units, and introducing a favorability-driven quest unlock system.</div>
+      </div>
+      <div class="contrib-block bl" data-lang-en>
+        <div class="contrib-title">LLM Pipeline Design</div>
+        <div class="contrib-desc">Designed the full generation pipeline from world lore → NPC persona → quest generation → quality validation. Balanced content diversity and world consistency through layered prompt injection.</div>
+      </div>
+      <div class="contrib-block bl" data-lang-en>
+        <div class="contrib-title">Production & PV</div>
+        <div class="contrib-desc">Managed three sprint iterations. Led the full promotional video production pipeline; reached 50K views within one week of release.</div>
+      </div>
+    </div>
+  </div>
 
-        <hr class="divider">
+  <!-- P2: Widget Idle -->
+  <div class="project-detail" id="p-widget">
+    <div class="media-container" style="position:relative;">
+      <div class="media-scroller">
+        <div class="media-item paused">
+          <video class="project-video" muted playsinline loop poster="assets/widget_poster.jpg">
+              <source src="assets/widget.mp4" type="video/mp4">
+          </video>
+          <div class="play-pause-overlay"></div>
+        </div>
+        <div class="media-item" style="background:#e2e8f0;">
+          <div style="color:var(--text-faint); font-weight:500;">Screenshot 1</div>
+        </div>
+      </div>
+      <div class="swipe-hint"><div class="arrow-anim">←</div></div>
+    </div>
 
-        <!-- About Me -->
-        <section id="about" class="about-section">
-            <h2 data-i18n="aboutTitle">About Me</h2>
-            <p data-i18n="aboutP1">BS in Computer Science...</p>
-            <p data-i18n="aboutP2">My design work...</p>
-            <p data-i18n="aboutP3">I have hands-on project experience...</p>
-            <p data-i18n="aboutP4">My long-term interest lies...</p>
-        </section>
+    <div class="project-detail-body">
+      <div class="project-role bl" style="color:var(--orange);" data-lang-zh>齿轮驱动的桌面放置游戏 | 系统设计 & 全栈开发 | 硕士毕设</div>
+      <div class="project-role bl" style="color:var(--orange);" data-lang-en>Gear-Driven Desktop Idle Game | Systems Design & Full-Stack Dev | MFA Capstone</div>
+      
+      <div class="project-detail-title">Widget Idle</div>
+      
+      <div class="project-detail-desc bl" data-lang-zh>
+        一款以桌面小组件为载体的放置游戏。核心循环建立在齿轮物理系统上——齿轮的大小、转速与啮合关系决定资源产出效率，玩家在手动操作与自动化挂机之间做出策略选择。
+      </div>
+      <div class="project-detail-desc bl" data-lang-en>
+        An idle game that lives on your desktop as a collection of interactive widgets. The core loop is built on a gear physics system. Players make strategic choices between manual effort and automated idling.
+      </div>
 
-        <hr class="divider">
+      <!-- Contributions -->
+      <div class="contrib-block bl" data-lang-zh>
+        <div class="contrib-title">齿轮经济 & Prestige系统</div>
+        <div class="contrib-desc">设计基于物理直觉的资源循环。Prestige重置机制提供meta层策略深度，技能树为不同play style提供差异化build路线。</div>
+      </div>
+      <div class="contrib-block bl" data-lang-zh>
+        <div class="contrib-title">A/B测试研究</div>
+        <div class="contrib-desc">设计三组对照实验，基于自我决定理论（SDT）框架，研究视听反馈如何影响玩家在“手动vs挂机”之间的决策倾向。</div>
+      </div>
+      <div class="contrib-block bl" data-lang-zh>
+        <div class="contrib-title">独立全栈开发</div>
+        <div class="contrib-desc">React + TypeScript + Electron，从系统设计到前端实现独立完成。</div>
+      </div>
 
-        <!-- Contact -->
-        <section id="contact" class="contact-section">
-            <h2 data-i18n="contactTitle">Contact</h2>
-            <div class="contact-links">
-                <a href="mailto:zzzhz0817@gmail.com" class="contact-btn email-btn">
-                    <span class="icon">✉️</span> <span data-i18n="contactEmail">Email: zzzhz0817@gmail.com</span>
-                </a>
-                <a href="https://linkedin.com/in/zzzhz" target="_blank" class="contact-btn">
-                    <span class="icon">💼</span> <span data-i18n="contactLinkedIn">LinkedIn</span>
-                </a>
-                <a href="https://zzzhz.itch.io" target="_blank" class="contact-btn">
-                    <span class="icon">🎮</span> <span data-i18n="contactItch">itch.io: zzzhz.itch.io</span>
-                </a>
-                <a href="assets/Hanzhe_Zhang_Resume.pdf" target="_blank" class="contact-btn primary-btn">
-                    <span class="icon">📄</span> <span data-i18n="contactResume">Resume (PDF)</span>
-                </a>
-                <a href="https://github.com/zzzhz0817" target="_blank" class="contact-btn">
-                    <span class="icon">🐙</span> <span data-i18n="contactGithub">GitHub</span>
-                </a>
-            </div>
-        </section>
+      <div class="contrib-block bl" data-lang-en>
+        <div class="contrib-title">Gear Economy & Prestige System</div>
+        <div class="contrib-desc">Designed a resource loop grounded in physical intuition. The Prestige reset mechanic adds meta-level strategic depth, while the skill tree offers differentiated build paths.</div>
+      </div>
+      <div class="contrib-block bl" data-lang-en>
+        <div class="contrib-title">A/B Testing Research</div>
+        <div class="contrib-desc">Designed a three-condition experiment grounded in SDT, studying how audiovisual feedback affects player tendencies between manual effort and idle waiting.</div>
+      </div>
+      <div class="contrib-block bl" data-lang-en>
+        <div class="contrib-title">Solo Full-Stack Development</div>
+        <div class="contrib-desc">React + TypeScript + Electron. Independently completed everything from systems design to frontend implementation.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P3: Translator -->
+  <div class="project-detail" id="p-translator">
+    <div class="media-container" style="position:relative;">
+      <div class="media-scroller">
+        <div class="media-item paused">
+          <video class="project-video" muted playsinline loop poster="assets/translator_poster.jpg">
+              <source src="assets/translator.mp4" type="video/mp4">
+          </video>
+          <div class="play-pause-overlay"></div>
+        </div>
+        <div class="media-item" style="background:#e2e8f0;">
+          <div style="color:var(--text-faint); font-weight:500;">Screenshot 1</div>
+        </div>
+      </div>
+      <div class="swipe-hint"><div class="arrow-anim">←</div></div>
+    </div>
+
+    <div class="project-detail-body">
+      <div class="project-role bl" style="color:var(--blue);" data-lang-zh>横版语言解谜冒险 | 谜题与叙事设计</div>
+      <div class="project-role bl" style="color:var(--blue);" data-lang-en>Side-Scrolling Language Puzzle Adventure | Puzzle & Narrative Design</div>
+      
+      <div class="project-detail-title bl" data-lang-zh>按右键打开翻译器</div>
+      <div class="project-detail-title bl" data-lang-en>Right Click to Open Translator</div>
+      
+      <div class="project-detail-desc bl" data-lang-zh>
+        一款围绕破译虚构语言展开的横版解谜冒险游戏。玩家在探索中逐步发现词汇和语法规则，通过“学会一门语言”本身来推进解谜与叙事。
+      </div>
+      <div class="project-detail-desc bl" data-lang-en>
+        A side-scrolling puzzle adventure built around deciphering a fictional language. Players discover vocabulary and grammar rules through exploration.
+      </div>
+
+      <!-- Contributions -->
+      <div class="contrib-block bl" data-lang-zh>
+        <div class="contrib-title">语言系统 & 谜题设计</div>
+        <div class="contrib-desc">参考自然语言学、构造语言和普遍语法理论，设计服务于谜题的虚构语言体系。核心原则：每个新语法规则的引入即是关卡的核心谜题。</div>
+      </div>
+      <div class="contrib-block bl" data-lang-zh>
+        <div class="contrib-title">竞品分析 & 迭代测试</div>
+        <div class="contrib-desc">分析同类作品确定差异化方向。每个谜题经过多轮playtest，根据卡关数据调整难度曲线与提示节奏。</div>
+      </div>
+      <div class="contrib-block bl" data-lang-zh>
+        <div class="contrib-title">主策划：范围管理与叙事协作</div>
+        <div class="contrib-desc">确定项目scope，在资源受限时做关键取舍。编写故事大纲，与文案协作打磨对话和环境叙事。</div>
+      </div>
+
+      <div class="contrib-block bl" data-lang-en>
+        <div class="contrib-title">Language System & Puzzle Design</div>
+        <div class="contrib-desc">Designed a fictional language system drawing from natural linguistics and constructed languages. Core principle: the introduction of each new grammar rule IS the core puzzle.</div>
+      </div>
+      <div class="contrib-block bl" data-lang-en>
+        <div class="contrib-title">Competitor Analysis & Iterative Testing</div>
+        <div class="contrib-desc">Analyzed comparable titles. Each puzzle went through multiple rounds of playtesting, adjusting difficulty curves based on player stuck-point data.</div>
+      </div>
+      <div class="contrib-block bl" data-lang-en>
+        <div class="contrib-title">Lead Designer: Scope Management</div>
+        <div class="contrib-desc">Defined project scope and made critical trade-offs under constraints. Authored the story outline and collaborated on environmental storytelling.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section">
+  <div class="section-label">About Me</div>
+
+  <div class="bio-card">
+    <div class="bio-text bl" data-lang-zh>
+      计算机本科，游戏设计硕士（Northeastern University, Game Science & Design ’26），曾在 UC Berkeley 交换期间学习人工智能与认知科学。
+    </div>
+    <div class="bio-text bl" data-lang-zh>
+      设计上，我关注两个维度：一是基于玩家体验的任务与叙事设计——怎么通过节奏、情境和信息控制让玩家产生特定的情感反应；二是用数学建模和数据分析驱动的系统设计。CS背景让我能快速搭建原型并独立迭代。
+    </div>
+    <div class="bio-text bl" data-lang-zh>
+      我有LLM内容生成管线的实际项目经验，关注的核心问题是：当AI的行为不完全可控时，系统层面该怎么设计，才能让“不确定性”变成乐趣而不是风险。我的长期兴趣在于游戏作为一种体验媒介如何塑造人的认知与文化——以及新技术正在怎样改变这个过程。
+    </div>
+
+    <div class="bio-text bl" data-lang-en>
+      BS in Computer Science, MFA in Game Science & Design (Northeastern University ’26). Studied AI and cognitive science during an exchange at UC Berkeley.
+    </div>
+    <div class="bio-text bl" data-lang-en>
+      My design work spans two dimensions: experience-driven quest and narrative design—shaping emotional responses through pacing; and analytically-driven systems design. My CS background lets me rapidly prototype and iterate independently.
+    </div>
+    <div class="bio-text bl" data-lang-en>
+      I have hands-on project experience with LLM content generation pipelines. The core question I care about: when AI behavior is not fully controllable, how should we design systems to turn “uncertainty” into delight? My long-term interest lies in how games shape human cognition and culture.
+    </div>
+  </div>
+
+  <div class="bio-card">
+    <div class="section-label" style="margin-bottom:12px; font-size:0.65rem;">Education</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">2024 — 2026</div>
+        <div class="timeline-title">Northeastern University</div>
+        <div class="timeline-sub">MFA Game Science & Design</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2022</div>
+        <div class="timeline-title">UC Berkeley</div>
+        <div class="timeline-sub bl" data-lang-zh>交换学习 · AI与认知科学</div>
+        <div class="timeline-sub bl" data-lang-en>Exchange · AI & Cognitive Science</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2019 — 2024</div>
+        <div class="timeline-title bl" data-lang-zh>香港中文大学（深圳）</div>
+        <div class="timeline-title bl" data-lang-en>CUHK-Shenzhen</div>
+        <div class="timeline-sub bl" data-lang-zh>计算机科学与技术</div>
+        <div class="timeline-sub bl" data-lang-en>B.Eng Computer Science</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact-section">
+  <div class="section-label">Contact</div>
+  <div class="contact-card">
+    <div class="contact-title bl" data-lang-zh>联系方式</div>
+    <div class="contact-title bl" data-lang-en>Get In Touch</div>
+    <div class="contact-sub bl" data-lang-zh>随时欢迎交流游戏设计与合作机会</div>
+    <div class="contact-sub bl" data-lang-en>Always open to chat about game design and opportunities</div>
+    
+    <div class="contact-buttons">
+      <a href="mailto:zzzhz0817@gmail.com" class="contact-btn primary">
+        <span class="btn-icon">✉️</span> zzzhz0817@gmail.com
+      </a>
+      <a href="https://linkedin.com/in/zzzhz" target="_blank" class="contact-btn secondary">
+        <span class="btn-icon">💼</span> LinkedIn
+      </a>
+      <a href="https://zzzhz.itch.io" target="_blank" class="contact-btn secondary">
+        <span class="btn-icon">🎮</span> itch.io
+      </a>
+      <a href="assets/Hanzhe_Zhang_Resume.pdf" target="_blank" class="contact-btn secondary bl" data-lang-zh>
+        <span class="btn-icon">📄</span> 下载简历 (PDF)
+      </a>
+      <a href="assets/Hanzhe_Zhang_Resume.pdf" target="_blank" class="contact-btn secondary bl" data-lang-en>
+        <span class="btn-icon">📄</span> Resume (PDF)
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="footer">© 2026 Hanzhe Zhang</div>
+
+<!-- Language Toggle -->
+<button class="lang-fab" id="langBtn" onclick="toggleLang()">EN</button>
+
+<script>
+  // Setup Language
+  let currentLang = 'zh';
+
+  function initLang() {
+    const savedLang = localStorage.getItem('preferredLang');
+    if (savedLang) {
+      currentLang = savedLang;
+    } else {
+      const browserLang = navigator.language || navigator.userLanguage || '';
+      if (browserLang.startsWith('en')) {
+        currentLang = 'en';
+      }
+    }
+    applyLang();
+  }
+
+  function applyLang() {
+    const html = document.documentElement;
+    html.classList.remove('lang-zh', 'lang-en');
+    html.classList.add('lang-' + currentLang);
+    
+    const btn = document.getElementById('langBtn');
+    btn.textContent = currentLang === 'zh' ? 'EN' : '中';
+    
+    document.title = currentLang === 'zh' ? '张涵哲 — 作品集' : 'Hanzhe Zhang — Portfolio';
+  }
+
+  function toggleLang() {
+    currentLang = currentLang === 'zh' ? 'en' : 'zh';
+    localStorage.setItem('preferredLang', currentLang);
+    applyLang();
+  }
+
+  function scrollToProject(id) {
+    const el = document.getElementById(id);
+    // account for slight padding offset
+    if (el) {
+        const y = el.getBoundingClientRect().top + window.scrollY - 20;
+        window.scrollTo({top: y, behavior: 'smooth'});
+    }
+  }
+
+  // Setup Video Play/Pause Observers
+  function initVideoInteractions() {
+    const videos = document.querySelectorAll('.project-video');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const video = entry.target;
+            const mediaItem = video.closest('.media-item');
+            if (!mediaItem) return;
+
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    if (video.paused) {
+                        const playPromise = video.play();
+                        if (playPromise !== undefined) {
+                            playPromise.then(() => {
+                                mediaItem.classList.remove('paused');
+                                mediaItem.classList.add('playing');
+                            }).catch(() => {
+                                mediaItem.classList.add('paused');
+                                mediaItem.classList.remove('playing');
+                            });
+                        }
+                    }
+                }, 100);
+            } else {
+                video.pause();
+                mediaItem.classList.add('paused');
+                mediaItem.classList.remove('playing');
+            }
+        });
+    }, { threshold: 0.5 });
+
+    videos.forEach(video => {
+        observer.observe(video);
+        const mediaItem = video.closest('.media-item');
+        const overlay = mediaItem.querySelector('.play-pause-overlay');
         
-        <footer class="footer">
-            <p>&copy; 2026 Hanzhe Zhang</p>
-        </footer>
-    </main>
+        const togglePlay = (e) => {
+            if(e) e.stopPropagation();
+            if (video.paused) {
+                video.play();
+                mediaItem.classList.remove('paused');
+                mediaItem.classList.add('playing');
+            } else {
+                video.pause();
+                mediaItem.classList.add('paused');
+                mediaItem.classList.remove('playing');
+            }
+        };
 
-    <script src="i18n.js"></script>
-    <script src="script.js"></script>
+        if (overlay) overlay.addEventListener('click', togglePlay);
+        video.addEventListener('click', togglePlay);
+    });
+  }
+
+  // Hide scroll hints on scroll
+  function initScrollHints() {
+    const scrollers = document.querySelectorAll('.media-scroller');
+    scrollers.forEach(scroller => {
+        const hint = scroller.parentElement.querySelector('.swipe-hint');
+        if (!hint) return;
+        
+        let hasScrolled = false;
+        scroller.addEventListener('scroll', () => {
+            if (!hasScrolled && scroller.scrollLeft > 10) {
+                hasScrolled = true;
+                hint.classList.add('hidden');
+                localStorage.setItem('hasSeenSwipeHint', 'true');
+            }
+        });
+
+        if (localStorage.getItem('hasSeenSwipeHint') === 'true') {
+            hint.classList.add('hidden');
+        }
+    });
+  }
+
+  // Init all
+  document.addEventListener('DOMContentLoaded', () => {
+      initLang();
+      initVideoInteractions();
+      initScrollHints();
+  });
+</script>
+
 </body>
 </html>
