@@ -730,34 +730,34 @@
         一款俯视角2D生存建造游戏。玩家通过输入提示词和参考形象招募NPC，系统据此生成语音、立绘、人格和技能。每个NPC拥有多层记忆的AI智能体，能基于玩家行为和世界状态生成专属任务线。
       </div>
       <div class="project-detail-desc bl" data-lang-en>
-        A top-down 2D survival builder. Players recruit NPCs by inputting prompts and reference images, and the system generates their voice, portrait, personality, and skills. Each NPC is an AI agent with multi-layered memory, capable of generating exclusive quest lines based on player actions and world states.
+        A top-down 2D survival builder. Players recruit NPCs by inputting prompts and reference images, and the system generates their voice, portrait, personality, and skills. Each NPC is an AI agent with multi-layered memory, capable of perceiving, planning, and reflecting, generating exclusive personal quest lines based on player actions and world states.
       </div>
 
       <!-- Contributions -->
       <div class="contrib-block bl" data-lang-zh>
         <div class="contrib-title">AI任务生成系统重构</div>
-        <div class="contrib-desc">重新设计任务生成架构——将任务拆解为可组合模块（触发、交互、奖励），构建结构化上下文环境，让AI感知玩家进度、NPC记忆和世界状态，在约束空间内按需生成。重构后内容量与稳定性显著提升。</div>
+        <div class="contrib-desc">重新设计任务生成架构，构建结构化上下文环境，让AI感知玩家进度、NPC记忆和世界状态，在约束空间内按需生成。重构后内容量与稳定性显著提升。</div>
       </div>
       <div class="contrib-block bl" data-lang-zh>
         <div class="contrib-title">LLM管线与提示词架构</div>
-        <div class="contrib-desc">设计角色生成与任务生成的完整LLM管线。通过分层上下文注入和按需查询的工具链约束生成边界，同时采用渐进式提示词结构，根据任务类型动态调整AI的生成范围。</div>
+        <div class="contrib-desc">设计角色生成与任务生成的完整LLM管线。通过分层上下文注入和按需查询的工具链约束生成边界。</div>
       </div>
       <div class="contrib-block bl" data-lang-zh>
         <div class="contrib-title">任务内容设计与叙事</div>
-        <div class="contrib-desc">设计NPC个人任务线的叙事走向与解锁节奏，让任务承载NPC性格的同时与玩家主线产生呼应。系统架构与管线设计均源于这些内容层面的需求。另主导宣传PV脚本与录制。</div>
+        <div class="contrib-desc">设计NPC个人任务线的叙事走向与解锁节奏，让任务承载NPC性格的同时与玩家主线产生呼应。另主导宣传PV脚本与录制。</div>
       </div>
 
       <div class="contrib-block bl" data-lang-en>
         <div class="contrib-title">AI Quest Generation System Redesign</div>
-        <div class="contrib-desc">Redesigned the quest generation architecture—decomposing quests into composable modules (triggers, interactions, rewards) and building a structured context environment. This allows the AI to perceive player progress, NPC memory, and world states, generating quests on-demand within constraints. Content volume and stability significantly improved post-refactor.</div>
+        <div class="contrib-desc">Redesigned the quest generation architecture by building a structured context environment. This allows the AI to perceive player progress, NPC memory, and world states, generating quests on-demand within constraints. Content volume and stability significantly improved post-refactor.</div>
       </div>
       <div class="contrib-block bl" data-lang-en>
         <div class="contrib-title">LLM Pipeline & Prompt Architecture</div>
-        <div class="contrib-desc">Designed the complete LLM pipeline for character and quest generation. Constrained generation boundaries through layered context injection and an on-demand query toolchain, while using a progressive prompt structure to dynamically adjust the AI's generation scope based on quest types.</div>
+        <div class="contrib-desc">Designed the complete LLM pipeline for character and quest generation. Constrained generation boundaries through layered context injection and an on-demand query toolchain.</div>
       </div>
       <div class="contrib-block bl" data-lang-en>
         <div class="contrib-title">Quest Content Design & Narrative</div>
-        <div class="contrib-desc">Designed the narrative direction and unlock pacing for NPC personal quest lines, ensuring quests carry the NPC's personality while echoing the player's main progression. The system architecture and pipeline design were driven by these content-level needs. Additionally, led the scripting and recording of the promotional PV.</div>
+        <div class="contrib-desc">Designed the narrative direction and unlock pacing for NPC personal quest lines, ensuring quests carry the NPC's personality while echoing the player's main progression. Additionally, led the scripting and recording of the promotional PV.</div>
       </div>
     </div>
   </div>
@@ -795,37 +795,37 @@
       <div class="project-role bl" style="color:var(--orange);" data-lang-en>Systems Design & Full-Stack Dev</div>
       
       <div class="project-detail-desc bl" data-lang-zh>
-        一款以桌面小组件为载体的放置游戏。核心循环建立在齿轮物理系统上——齿轮的大小、转速与啮合关系决定资源产出效率，玩家在手动操作与自动化挂机之间做出策略选择。
+        一款悬浮在桌面一角的放置游戏。针对"一边做事一边挂机"的使用场景，将番茄钟、天气、系统监控等实用小组件作为游戏内的产出单元——每个组件的实用功能与玩法数值有机结合。
       </div>
       <div class="project-detail-desc bl" data-lang-en>
-        An idle game that lives on your desktop as a collection of interactive widgets. The core loop is built on a gear physics system. Players make strategic choices between manual effort and automated idling.
+        An idle game that floats in the corner of your desktop. Designed for the "idle while working" scenario, it integrates practical widgets like Pomodoro timers, weather, and system monitors as resource-generating units—blending utility with gameplay mechanics.
       </div>
 
       <!-- Contributions -->
       <div class="contrib-block bl" data-lang-zh>
-        <div class="contrib-title">齿轮经济 & Prestige系统</div>
-        <div class="contrib-desc">设计基于物理直觉的资源循环。Prestige重置机制提供meta层策略深度，技能树为不同play style提供差异化build路线。</div>
+        <div class="contrib-title">经济系统与数值设计</div>
+        <div class="contrib-desc">设计了涵盖点击收益、组件产出、升级成本曲线的完整数值框架。通过解锁节奏和特殊升级的时机控制，引导玩家从主动点击自然过渡到挂机生产。</div>
       </div>
       <div class="contrib-block bl" data-lang-zh>
-        <div class="contrib-title">A/B测试研究</div>
-        <div class="contrib-desc">设计三组对照实验，基于自我决定理论（SDT）框架，研究视听反馈如何影响玩家在“手动vs挂机”之间的决策倾向。</div>
+        <div class="contrib-title">A/B测试与体验迭代</div>
+        <div class="contrib-desc">基于自我决定理论（SDT）设计三组对照实验，测试视听反馈对玩家主动操作意愿的影响，用实验数据反哺核心循环的体验调优。预计2026年内上线。</div>
       </div>
       <div class="contrib-block bl" data-lang-zh>
-        <div class="contrib-title">独立全栈开发</div>
-        <div class="contrib-desc">React + TypeScript + Electron，从系统设计到前端实现独立完成。</div>
+        <div class="contrib-title">独立设计与开发</div>
+        <div class="contrib-desc">使用React + TypeScript + Electron独立完成全部设计与开发，覆盖从经济系统架构到前端交互的完整链路。</div>
       </div>
 
       <div class="contrib-block bl" data-lang-en>
-        <div class="contrib-title">Gear Economy & Prestige System</div>
-        <div class="contrib-desc">Designed a resource loop grounded in physical intuition. The Prestige reset mechanic adds meta-level strategic depth, while the skill tree offers differentiated build paths.</div>
+        <div class="contrib-title">Economic System & Numerical Design</div>
+        <div class="contrib-desc">Designed a complete numerical framework covering click yields, widget outputs, and upgrade cost curves. Guided players' natural transition from active clicking to idle production through pacing and strategic upgrade timing.</div>
       </div>
       <div class="contrib-block bl" data-lang-en>
-        <div class="contrib-title">A/B Testing Research</div>
-        <div class="contrib-desc">Designed a three-condition experiment grounded in SDT, studying how audiovisual feedback affects player tendencies between manual effort and idle waiting.</div>
+        <div class="contrib-title">A/B Testing & Experience Iteration</div>
+        <div class="contrib-desc">Designed a three-condition experiment grounded in Self-Determination Theory (SDT) to test how audiovisual feedback affects players' willingness to perform active operations, using experimental data to refine the core loop. Expected release in 2026.</div>
       </div>
       <div class="contrib-block bl" data-lang-en>
-        <div class="contrib-title">Solo Full-Stack Development</div>
-        <div class="contrib-desc">React + TypeScript + Electron. Independently completed everything from systems design to frontend implementation.</div>
+        <div class="contrib-title">Solo Design & Development</div>
+        <div class="contrib-desc">Independently completed all design and development using React + TypeScript + Electron, covering the entire pipeline from economic system architecture to frontend interaction.</div>
       </div>
     </div>
   </div>
