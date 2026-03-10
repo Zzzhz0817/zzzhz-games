@@ -727,37 +727,37 @@
       <div class="project-role bl" style="color:var(--blue);" data-lang-en>GenAI Systems Design & Quest Design</div>
       
       <div class="project-detail-desc bl" data-lang-zh>
-        一款俯视角2D生存建造游戏。玩家可以通过自由输入提示词和参考形象来招募NPC——系统会据此生成NPC的语音、立绘、人格和技能。每个NPC拥有多层记忆结构的AI智能体，能感知、规划和反思，并基于玩家行为和世界状态生成专属的个人任务线。
+        一款俯视角2D生存建造游戏。玩家通过输入提示词和参考形象招募NPC，系统据此生成语音、立绘、人格和技能。每个NPC拥有多层记忆的AI智能体，能基于玩家行为和世界状态生成专属任务线。
       </div>
       <div class="project-detail-desc bl" data-lang-en>
-        A top-down 2D survival builder. Players can recruit NPCs by freely inputting prompts and reference images—the system then generates their voice, portrait, personality, and skills. Each NPC is an AI agent with a multi-layered memory structure, capable of perceiving, planning, and reflecting, generating exclusive personal quest lines based on player actions and world states.
+        A top-down 2D survival builder. Players recruit NPCs by inputting prompts and reference images, and the system generates their voice, portrait, personality, and skills. Each NPC is an AI agent with multi-layered memory, capable of generating exclusive quest lines based on player actions and world states.
       </div>
 
       <!-- Contributions -->
       <div class="contrib-block bl" data-lang-zh>
         <div class="contrib-title">AI任务生成系统重构</div>
-        <div class="contrib-desc">原有系统在NPC创建时一次性生成全部任务，无法响应玩家行为和世界状态变化。我重新设计了整套任务生成架构——将任务拆解为可组合的模块（触发条件、交互流程、奖励结构），并构建结构化的上下文环境，让AI能够感知玩家进度、NPC记忆和世界状态，在明确的约束空间内按需生成任务。重构后Beta测试中可玩内容量与生成稳定性均显著提升。</div>
+        <div class="contrib-desc">重新设计任务生成架构——将任务拆解为可组合模块（触发、交互、奖励），构建结构化上下文环境，让AI感知玩家进度、NPC记忆和世界状态，在约束空间内按需生成。重构后内容量与稳定性显著提升。</div>
       </div>
       <div class="contrib-block bl" data-lang-zh>
         <div class="contrib-title">LLM管线与提示词架构</div>
-        <div class="contrib-desc">设计了角色生成与任务生成系统的完整LLM管线。核心挑战是让AI既能自由生成多样内容，又不偏离世界观——通过分层的上下文注入和按需查询的工具链来约束生成边界，同时设计了渐进式的提示词结构，根据任务类型动态调整AI的生成范围。</div>
+        <div class="contrib-desc">设计角色生成与任务生成的完整LLM管线。通过分层上下文注入和按需查询的工具链约束生成边界，同时采用渐进式提示词结构，根据任务类型动态调整AI的生成范围。</div>
       </div>
       <div class="contrib-block bl" data-lang-zh>
         <div class="contrib-title">任务内容设计与叙事</div>
-        <div class="contrib-desc">基于重构后的模块系统，设计并配置了多条预制任务——为不同类型的NPC编排任务节奏和解锁条件，确保玩家在不同好感度阶段体验到有差异的任务内容。同时设计NPC个人任务线的叙事框架，让每条任务线既能承载NPC的性格和背景故事，又能与玩家当前的主线进度产生呼应。此外主导了宣传PV的脚本与引擎内录制，上线一周播放量达5万。</div>
+        <div class="contrib-desc">设计NPC个人任务线的叙事走向与解锁节奏，让任务承载NPC性格的同时与玩家主线产生呼应。系统架构与管线设计均源于这些内容层面的需求。另主导宣传PV脚本与录制。</div>
       </div>
 
       <div class="contrib-block bl" data-lang-en>
         <div class="contrib-title">AI Quest Generation System Redesign</div>
-        <div class="contrib-desc">The original system generated all quests at NPC creation, failing to respond to player actions and world changes. I redesigned the entire quest generation architecture—decomposing quests into composable modules (triggers, flows, rewards) and building a structured context environment. This allows the AI to perceive player progress, NPC memory, and world states, generating quests on-demand within clear constraints. Playable content and generation stability significantly improved in Beta testing.</div>
+        <div class="contrib-desc">Redesigned the quest generation architecture—decomposing quests into composable modules (triggers, interactions, rewards) and building a structured context environment. This allows the AI to perceive player progress, NPC memory, and world states, generating quests on-demand within constraints. Content volume and stability significantly improved post-refactor.</div>
       </div>
       <div class="contrib-block bl" data-lang-en>
         <div class="contrib-title">LLM Pipeline & Prompt Architecture</div>
-        <div class="contrib-desc">Designed the complete LLM pipeline for character and quest generation systems. The core challenge was allowing the AI to freely generate diverse content without deviating from the world lore—achieved through layered context injection and an on-demand query toolchain to constrain generation boundaries. Also designed a progressive prompt structure to dynamically adjust the AI's generation scope based on quest types.</div>
+        <div class="contrib-desc">Designed the complete LLM pipeline for character and quest generation. Constrained generation boundaries through layered context injection and an on-demand query toolchain, while using a progressive prompt structure to dynamically adjust the AI's generation scope based on quest types.</div>
       </div>
       <div class="contrib-block bl" data-lang-en>
         <div class="contrib-title">Quest Content Design & Narrative</div>
-        <div class="contrib-desc">Based on the redesigned modular system, designed and configured multiple prefab quests—orchestrating quest pacing and unlock conditions for different NPC types to ensure varied experiences across affinity stages. Designed the narrative framework for NPC personal quest lines, ensuring they carry the NPC's personality and backstory while echoing the player's main progression. Additionally, led the scripting and in-engine recording for the promotional PV, reaching 50K views in its first week.</div>
+        <div class="contrib-desc">Designed the narrative direction and unlock pacing for NPC personal quest lines, ensuring quests carry the NPC's personality while echoing the player's main progression. The system architecture and pipeline design were driven by these content-level needs. Additionally, led the scripting and recording of the promotional PV.</div>
       </div>
     </div>
   </div>
