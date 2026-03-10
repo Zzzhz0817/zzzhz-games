@@ -171,26 +171,19 @@
     box-shadow: var(--shadow-sm);
   }
 
-  .hero-contact-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 24px;
+  .tag-contact {
     background: var(--text);
     color: var(--surface);
-    border-radius: 100px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    border: none;
+    border-color: var(--text);
     cursor: pointer;
-    box-shadow: var(--shadow-md);
-    transition: transform 0.2s;
-    margin-bottom: 24px;
-    font-family: inherit;
-    align-self: flex-start;
+    transition: transform 0.2s, background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
-  .hero-contact-btn:active {
-    transform: scale(0.96);
+  
+  .tag-contact:active {
+    transform: scale(0.95);
   }
 
   /* Slogan */
@@ -668,11 +661,31 @@
     margin: 0 auto 12px;
   }
 
-  .qr-content p {
-    margin: 0;
+  .wechat-id-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--surface2);
+    padding: 8px 16px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid var(--border-light);
+  }
+
+  .wechat-id-container:active {
+    transform: scale(0.96);
+  }
+
+  .copy-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--text-dim);
-    font-size: 0.9rem;
-    font-weight: 500;
   }
 
   .qr-close {
@@ -732,7 +745,7 @@
     <span class="tag tag-primary">技术策划</span>
     <span class="tag tag-outline">AI + 游戏</span>
     <span class="tag tag-outline">系统设计</span>
-    <span class="tag tag-outline">任务与叙事</span>
+    <span class="tag tag-contact" onclick="scrollToProject('contact-section')">👋 联系我</span>
   </div>
 
   <!-- English tags -->
@@ -740,13 +753,8 @@
     <span class="tag tag-primary">Technical Design</span>
     <span class="tag tag-outline">AI + Games</span>
     <span class="tag tag-outline">Systems Design</span>
-    <span class="tag tag-outline">Quest & Narrative</span>
+    <span class="tag tag-contact" onclick="scrollToProject('contact-section')">👋 Contact</span>
   </div>
-
-  <button class="hero-contact-btn" onclick="scrollToProject('contact-section')">
-    <span class="bl" data-lang-zh>👋 联系我</span>
-    <span class="bl" data-lang-en>👋 Contact Me</span>
-  </button>
 
   <!-- Featured projects (shared structure, dual lang content) -->
   <div class="featured-grid">
@@ -1091,8 +1099,12 @@
   <div class="qr-content" onclick="event.stopPropagation()">
     <button class="qr-close" onclick="hideWechatQR(event)">✕</button>
     <img src="assets/wechat_qr.png" alt="WeChat QR Code">
-    <p class="bl" data-lang-zh>扫一扫加我微信</p>
-    <p class="bl" data-lang-en>Scan to add on WeChat</p>
+    <div class="wechat-id-container" onclick="copyWechatId()">
+      <span>Zzzhz0817</span>
+      <span class="copy-icon" id="copyIcon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      </span>
+    </div>
   </div>
 </div>
 
@@ -1236,6 +1248,20 @@
     setTimeout(() => {
       modal.style.display = 'none';
     }, 300); // Match transition duration
+  }
+
+  function copyWechatId() {
+    navigator.clipboard.writeText('Zzzhz0817').then(() => {
+      const iconContainer = document.getElementById('copyIcon');
+      const originalHTML = iconContainer.innerHTML;
+      // 切换为绿色的对勾图标
+      iconContainer.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+      setTimeout(() => {
+        iconContainer.innerHTML = originalHTML;
+      }, 2000);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
   }
 
   // Init all
