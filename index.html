@@ -171,6 +171,28 @@
     box-shadow: var(--shadow-sm);
   }
 
+  .hero-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    background: var(--text);
+    color: var(--surface);
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.2s;
+    margin-bottom: 24px;
+    font-family: inherit;
+    align-self: flex-start;
+  }
+  .hero-contact-btn:active {
+    transform: scale(0.96);
+  }
+
   /* Slogan */
   .slogan {
     font-size: 1.05rem;
@@ -590,7 +612,86 @@
     color: var(--text); 
     border: 1px solid var(--border-light);
   }
-  .contact-btn .btn-icon { font-size: 1.1rem; }
+  .contact-btn .btn-icon { 
+    font-size: 1.1rem; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .contact-btn .btn-icon img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
+
+  /* WeChat QR Code Modal */
+  .qr-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .qr-modal.show {
+    display: flex;
+    opacity: 1;
+  }
+
+  .qr-content {
+    background: #fff;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    position: relative;
+  }
+
+  .qr-modal.show .qr-content {
+    transform: scale(1);
+  }
+
+  .qr-content img {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin: 0 auto 12px;
+  }
+
+  .qr-content p {
+    margin: 0;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .qr-close {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    font-weight: bold;
+    color: var(--text-dim);
+    border: none;
+  }
 
   /* Footer */
   .footer {
@@ -641,6 +742,11 @@
     <span class="tag tag-outline">Systems Design</span>
     <span class="tag tag-outline">Quest & Narrative</span>
   </div>
+
+  <button class="hero-contact-btn" onclick="scrollToProject('contact-section')">
+    <span class="bl" data-lang-zh>👋 联系我</span>
+    <span class="bl" data-lang-en>👋 Contact Me</span>
+  </button>
 
   <!-- Featured projects (shared structure, dual lang content) -->
   <div class="featured-grid">
@@ -958,7 +1064,7 @@
 </section>
 
 <!-- ============ CONTACT ============ -->
-<section class="contact-section">
+<section class="contact-section" id="contact-section">
   <div class="section-label">Contact</div>
   <div class="contact-card">
     <div class="contact-title bl" data-lang-zh>联系方式</div>
@@ -971,11 +1077,24 @@
         <span class="btn-icon">✉️</span> zzzhz0817@gmail.com
       </a>
       <a href="https://www.linkedin.com/in/hanzhe-zhang-88b4aa328?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" class="contact-btn secondary">
-        <span class="btn-icon">💼</span> LinkedIn
+        <span class="btn-icon"><img src="assets/linkedin.png" alt="LinkedIn"></span> LinkedIn
       </a>
+      <button class="contact-btn secondary" onclick="showWechatQR()" style="width: 100%; border: 1px solid var(--border-light); cursor: pointer;">
+        <span class="btn-icon"><img src="assets/wechat.png" alt="WeChat"></span> WeChat
+      </button>
     </div>
   </div>
 </section>
+
+<!-- WeChat QR Modal -->
+<div class="qr-modal" id="wechatModal" onclick="hideWechatQR(event)">
+  <div class="qr-content" onclick="event.stopPropagation()">
+    <button class="qr-close" onclick="hideWechatQR(event)">✕</button>
+    <img src="assets/wechat_qr.png" alt="WeChat QR Code">
+    <p class="bl" data-lang-zh>扫一扫加我微信</p>
+    <p class="bl" data-lang-en>Scan to add on WeChat</p>
+  </div>
+</div>
 
 <div class="footer">© 2026 Hanzhe Zhang</div>
 
@@ -1097,6 +1216,26 @@
             hint.classList.add('hidden');
         }
     });
+  }
+
+  // WeChat QR Modal Logic
+  function showWechatQR() {
+    const modal = document.getElementById('wechatModal');
+    modal.style.display = 'flex';
+    // Trigger reflow
+    void modal.offsetWidth;
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  }
+
+  function hideWechatQR(e) {
+    if (e) e.stopPropagation();
+    const modal = document.getElementById('wechatModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      modal.style.display = 'none';
+    }, 300); // Match transition duration
   }
 
   // Init all
