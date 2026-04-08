@@ -196,6 +196,25 @@
       text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
 
+    /* Mobile overrides */
+    html.mobile #hud-height,
+    html.mobile #hud-mountain-name {
+      color: var(--primary-blue) !important;
+    }
+    html.mobile #tutorial-hint {
+      color: var(--primary-blue);
+    }
+    html.mobile #tutorial-hint.show {
+      color: var(--primary-blue);
+    }
+    @keyframes hint-pulse-mobile {
+      0%, 100% { text-shadow: 0 0 8px rgba(41,98,255,0.3), 0 4px 10px rgba(0,0,0,0.6); }
+      50%       { text-shadow: 0 0 22px rgba(41,98,255,0.95), 0 0 40px rgba(41,98,255,0.5), 0 4px 10px rgba(0,0,0,0.6); }
+    }
+    html.mobile #tutorial-hint {
+      animation: hint-pulse-mobile 2s ease-in-out infinite;
+    }
+
     #hud-best {
       font-size: 14px;
       color: #aaa;
@@ -1044,7 +1063,7 @@
       font-weight: 600;
     }
   </style>
-  <script type="module" crossorigin src="/si-m/assets/index-DMyBDLM5.js"></script>
+  <script type="module" crossorigin src="/si-m/assets/index-DXut5p6g.js"></script>
 </head>
 <body>
   <div id="game-container">
