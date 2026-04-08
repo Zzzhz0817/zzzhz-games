@@ -37,17 +37,23 @@
       -webkit-touch-callout: none;
     }
 
-    /* Force landscape on mobile via CSS rotation when in portrait */
-    @media screen and (orientation: portrait) and (max-width: 900px) {
-      html {
-        transform: rotate(90deg);
-        transform-origin: top left;
-        width: 100vh;
-        height: 100vw;
-        position: absolute;
-        top: 0;
-        left: 100vw;
-        overflow: hidden;
+    /* Force landscape on mobile build only via CSS rotation when in portrait */
+    html.mobile {
+      transform: rotate(90deg);
+      transform-origin: top left;
+      width: 100vh;
+      height: 100vw;
+      position: absolute;
+      top: 0;
+      left: 100vw;
+      overflow: hidden;
+    }
+    @media screen and (orientation: landscape) {
+      html.mobile {
+        transform: none;
+        width: 100%;
+        height: 100%;
+        position: static;
       }
     }
 
